@@ -3,21 +3,25 @@
 #include <gf/Color.h>
 #include <gf/EntityContainer.h>
 #include <gf/Event.h>
+#include <gf/Random.h>
 #include <gf/RenderWindow.h>
 #include <gf/ViewContainer.h>
 #include <gf/Views.h>
 #include <gf/Window.h>
 
+#include "local/Sea.h"
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
-  static constexpr gf::Vector2f ViewSize(100.0f, 100.0f); // dummy values
-  static constexpr gf::Vector2f ViewCenter(0.0f, 0.0f); // dummy values
+  static constexpr gf::Vector2f ViewSize(576.0f, 576.0f); // dummy values
+  static constexpr gf::Vector2f ViewCenter(288.0f, 288.0f); // dummy values
 
   // initialization
 
   gf::Window window("Bygone Islands", ScreenSize);
   gf::RenderWindow renderer(window);
+
+  gf::Random random;
 
   // views
 
@@ -71,7 +75,10 @@ int main() {
   // entities
 
   gf::EntityContainer mainEntities;
-  // add entities to mainEntities
+
+  bi::Sea sea;
+  sea.generate(random);
+  mainEntities.addEntity(sea);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
