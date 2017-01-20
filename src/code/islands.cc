@@ -8,11 +8,13 @@
 #include <gf/Views.h>
 #include <gf/Window.h>
 
+#include "local/Hero.h"
+
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
   static constexpr gf::Vector2f ViewSize(100.0f, 100.0f); // dummy values
-  static constexpr gf::Vector2f ViewCenter(0.0f, 0.0f); // dummy values
+  static constexpr gf::Vector2f ViewCenter(50.0f, 50.0f); // dummy values
 
   // initialization
 
@@ -69,16 +71,17 @@ int main() {
   actions.addAction(downAction);
 
   // entities
+  bi::Hero hero;
 
   gf::EntityContainer mainEntities;
-  // add entities to mainEntities
+  mainEntities.addEntity(hero);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
 
   // game loop
 
-  renderer.clear(gf::Color::White);
+  renderer.clear(gf::Color::Black);
 
   gf::Clock clock;
 

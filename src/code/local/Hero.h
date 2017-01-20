@@ -1,17 +1,18 @@
 // TODO add licence
 
-#ifndef LOCAL_HERO_H
-#define LOCAL_HERO_H
+#ifndef BI_HERO_H
+#define BI_HERO_H
 
 #include <gf/Entity.h>
 
 namespace bi {
   class Hero: public gf::Entity {
   public:
-    //
+    virtual void update(float dt) override;
+    virtual void render(gf::RenderTarget& target) override;
 
   private:
-  }
+  };
 }
 
-#endif // LOCAL_HERO_H
+#endif // BI_HERO_H
