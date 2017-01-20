@@ -15,6 +15,7 @@ if(NOT MSVC)
 endif()
 
 add_executable(islands
+  code/local/Hero.cc
   code/islands.cc
   code/local/Sea.cc
 )
