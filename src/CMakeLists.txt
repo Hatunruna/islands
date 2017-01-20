@@ -16,6 +16,7 @@ endif()
 
 add_executable(islands
   code/islands.cc
+  code/local/Sea.cc
 )
 
 target_include_directories(islands
