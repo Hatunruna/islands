@@ -3,12 +3,14 @@
 #include <gf/Color.h>
 #include <gf/EntityContainer.h>
 #include <gf/Event.h>
+#include <gf/Log.h>
 #include <gf/Random.h>
 #include <gf/RenderWindow.h>
 #include <gf/ViewContainer.h>
 #include <gf/Views.h>
 #include <gf/Window.h>
 
+#include "config.h"
 #include "local/Hero.h"
 #include "local/Messages.h"
 #include "local/Sea.h"
@@ -20,6 +22,7 @@ int main() {
   static constexpr gf::Vector2f ViewCenter(288.0f, 288.0f);
 
   // initialization
+  gf::Log::setLevel(gf::Log::Level::Debug);
 
   gf::Window window("Bygone Islands", ScreenSize);
   gf::RenderWindow renderer(window);
@@ -27,6 +30,8 @@ int main() {
   gf::SingletonStorage<gf::MessageManager> storageForMessageManager(bi::gMessageManager);
   gf::SingletonStorage<gf::ResourceManager> storageForResourceManager(bi::gResourceManager);
   gf::SingletonStorage<gf::Random> storageForRandom(bi::gRandom);
+
+  bi::gResourceManager().addSearchDir(ISLANDS_DATA_DIR);
 
   // views
 

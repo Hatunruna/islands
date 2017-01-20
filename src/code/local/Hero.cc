@@ -2,6 +2,7 @@
 
 #include <gf/RenderTarget.h>
 #include <gf/Shapes.h>
+#include <gf/Sprite.h>
 
 #include "Messages.h"
 #include "Singletons.h"
@@ -15,7 +16,8 @@ namespace bi {
   , m_turn(Turn::NONE)
   , m_move(Move::NONE)
   , m_position(postion)
-  , m_angle(0.0f) {
+  , m_angle(0.0f)
+  , m_texture(gResourceManager().getTexture("tricorn.png")) {
 
   }
 
@@ -83,11 +85,13 @@ namespace bi {
   }
 
   void Hero::render(gf::RenderTarget& target) {
-    gf::CircleShape sprite(10.0f, 3);
-    sprite.setColor(gf::Color::Red);
-    sprite.setPosition(m_position);
-    sprite.setRotation(m_angle + gf::Pi2); // Pi/2 to align the hero front face
+    gf::Sprite sprite;
     sprite.setAnchor(gf::Anchor::Center);
+    sprite.setRotation(m_angle - gf::Pi2); // Pi/2 to align the hero front face
+    sprite.setColor(gf::Color::Red);
+    sprite.setTexture(m_texture);
+    sprite.setPosition(m_position);
+    sprite.setScale(100.0f / 256.0f);
 
     target.draw(sprite);
   }

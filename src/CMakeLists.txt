@@ -4,6 +4,8 @@ project(ISLANDS
   VERSION 0.1.0
 )
 
+include(GNUInstallDirs)
+
 find_package(gf REQUIRED)
 
 

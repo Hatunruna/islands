@@ -4,6 +4,7 @@
 #define BI_HERO_H
 
 #include <gf/Entity.h>
+#include <gf/Texture.h>
 #include <gf/Vector.h>
 
 namespace bi {
@@ -40,6 +41,7 @@ namespace bi {
     Move m_move;
     gf::Vector2f m_position;
     float m_angle;
+    gf::Texture &m_texture;
   };
 }
 
