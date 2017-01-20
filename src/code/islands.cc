@@ -3,24 +3,29 @@
 #include <gf/Color.h>
 #include <gf/EntityContainer.h>
 #include <gf/Event.h>
+#include <gf/Random.h>
 #include <gf/RenderWindow.h>
 #include <gf/ViewContainer.h>
 #include <gf/Views.h>
 #include <gf/Window.h>
 
 #include "local/Hero.h"
-
-#include <gf/Log.h>
+#include "local/Sea.h"
+#include "local/Singletons.h"
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
-  static constexpr gf::Vector2f ViewSize(100.0f, 100.0f); // dummy values
-  static constexpr gf::Vector2f ViewCenter(50.0f, 50.0f); // dummy values
+  static constexpr gf::Vector2f ViewSize(576.0f, 576.0f);
+  static constexpr gf::Vector2f ViewCenter(288.0f, 288.0f);
 
   // initialization
 
   gf::Window window("Bygone Islands", ScreenSize);
   gf::RenderWindow renderer(window);
+
+  gf::SingletonStorage<gf::MessageManager> storageForMessageManager(bi::gMessageManager);
+  gf::SingletonStorage<gf::ResourceManager> storageForResourceManager(bi::gResourceManager);
+  gf::SingletonStorage<gf::Random> storageForRandom(bi::gRandom);
 
   // views
 
@@ -73,15 +78,17 @@ int main() {
 
   // entities
   bi::Hero hero({ 0.0f, 0.0f });
+  bi::Sea sea;
+  sea.generate();
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
+  mainEntities.addEntity(sea);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
 
   // game loop
-
   renderer.clear(gf::Color::Black);
 
   gf::Clock clock;
