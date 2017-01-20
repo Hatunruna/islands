@@ -10,6 +10,7 @@
 
 #include "local/Hero.h"
 
+#include <gf/Log.h>
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
@@ -71,7 +72,7 @@ int main() {
   actions.addAction(downAction);
 
   // entities
-  bi::Hero hero;
+  bi::Hero hero({ 0.0f, 0.0f });
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
@@ -104,15 +105,25 @@ int main() {
     }
 
     if (rightAction.isActive()) {
-      // do something
+      // gf::Log::print("RIGHT\n");
+      hero.turnRight();
     } else if (leftAction.isActive()) {
-      // do something
-    } else if (upAction.isActive()) {
-      // do something
-    } else if (downAction.isActive()) {
-      // do something
+      // gf::Log::print("LEFT\n");
+      hero.turnLeft();
     } else {
-      // do something
+      // gf::Log::print("TURN OFF");
+      hero.turnNone();
+    }
+
+    if (upAction.isActive()) {
+      // gf::Log::print("UP\n");
+      hero.moveForward();
+    } else if (downAction.isActive()) {
+      // gf::Log::print("DOWN\n");
+      hero.moveBackward();
+    } else {
+      // gf::Log::print("STOP");
+      hero.moveStop();
     }
 
 
