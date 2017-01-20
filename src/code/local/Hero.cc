@@ -3,11 +3,12 @@
 #include <gf/RenderTarget.h>
 #include <gf/Shapes.h>
 
-#include <gf/Log.h>
+#include "Messages.h"
+#include "Singletons.h"
 
 namespace bi {
   static constexpr float ANGULAR_VELOCITY = 1.0f;
-  static constexpr float VELOCITY = 10.0f;
+  static constexpr float VELOCITY = 100.0f;
 
   Hero::Hero(const gf::Vector2f postion)
   : gf::Entity(10)
@@ -74,6 +75,11 @@ namespace bi {
 
     // Compute the new position
     m_position += gf::unit(m_angle) * velocity;
+
+    // Send the position message
+    HeroPosition message;
+    message.position = m_position;
+    gMessageManager().sendMessage(&message);
   }
 
   void Hero::render(gf::RenderTarget& target) {

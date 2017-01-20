@@ -10,6 +10,7 @@
 #include <gf/Window.h>
 
 #include "local/Hero.h"
+#include "local/Messages.h"
 #include "local/Sea.h"
 #include "local/Singletons.h"
 
@@ -38,6 +39,13 @@ int main() {
   views.addView(hudView);
 
   views.setInitialScreenSize(ScreenSize);
+
+  bi::gMessageManager().registerHandler<bi::HeroPosition>([&mainView](gf::Id type, gf::Message *msg) {
+    assert(type == bi::HeroPosition::type);
+    auto positionHeroMessage = static_cast<bi::HeroPosition*>(msg);
+    mainView.setCenter(positionHeroMessage->position);
+    return gf::MessageStatus::Keep;
+  });
 
   // actions
 

@@ -8,7 +8,7 @@ using namespace gf::literals;
 
 namespace bi {
 
-  struct HeroPosition {
+  struct HeroPosition: public gf::Message {
     static constexpr gf::Id type = "HeroPosition"_id;
 
     gf::Vector2f position;
