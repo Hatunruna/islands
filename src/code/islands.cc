@@ -16,7 +16,7 @@ int main() {
 
   // initialization
 
-  gf::Window window("Game", ScreenSize);
+  gf::Window window("Bygone Islands", ScreenSize);
   gf::RenderWindow renderer(window);
 
   // views
