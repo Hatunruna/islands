@@ -20,6 +20,7 @@
 #include "local/Singletons.h"
 #include "local/Steam.h"
 #include "local/TreasureManager.h"
+#include "local/WaveManager.h"
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
@@ -116,11 +117,14 @@ int main() {
   bi::Compass compass;
   bi::Gold gold;
 
+  bi::WaveManager waves;
+
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
   mainEntities.addEntity(sea);
   mainEntities.addEntity(treasures);
   mainEntities.addEntity(steam);
+  mainEntities.addEntity(waves);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities

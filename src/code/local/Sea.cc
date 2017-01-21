@@ -10,20 +10,11 @@
 #include "Singletons.h"
 
 namespace bi {
-  static constexpr unsigned Size = 1500;
-
   static constexpr double Scale = 6.0;
   static constexpr double SeaLevel = 0.65;
 
-  static constexpr float TileSize = 8.0f;
-  static constexpr unsigned HalfRange = 100;
-
-  static constexpr unsigned Edge = 80;
-
+  static constexpr unsigned DisplayHalfRange = 100;
   static constexpr unsigned TreasureCount = 30;
-
-  static constexpr float WorldMin = Edge * TileSize;
-  static constexpr float WorldMax = (Size - Edge) * TileSize;
 
   Sea::Sea()
   : m_vertices(gf::PrimitiveType::Triangles)
@@ -191,10 +182,10 @@ namespace bi {
   }
 
   void Sea::update(float dt) {
-    unsigned rowMin = (m_hero.y > HalfRange) ? (m_hero.y - HalfRange) : 0;
-    unsigned rowMax = (m_hero.y + HalfRange < Size) ? (m_hero.y + HalfRange) : Size - 1;
-    unsigned colMin = (m_hero.x > HalfRange) ? (m_hero.x - HalfRange) : 0;
-    unsigned colMax = (m_hero.x + HalfRange < Size) ? (m_hero.x + HalfRange) : Size - 1;
+    unsigned rowMin = (m_hero.y > DisplayHalfRange) ? (m_hero.y - DisplayHalfRange) : 0;
+    unsigned rowMax = (m_hero.y + DisplayHalfRange < Size) ? (m_hero.y + DisplayHalfRange) : Size - 1;
+    unsigned colMin = (m_hero.x > DisplayHalfRange) ? (m_hero.x - DisplayHalfRange) : 0;
+    unsigned colMax = (m_hero.x + DisplayHalfRange < Size) ? (m_hero.x + DisplayHalfRange) : Size - 1;
 
     m_vertices.clear();
 

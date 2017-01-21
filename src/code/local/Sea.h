@@ -13,6 +13,12 @@ namespace bi {
 
   class Sea : public gf::Entity {
   public:
+    static constexpr unsigned Size = 1500;
+    static constexpr unsigned Edge = 80;
+    static constexpr float TileSize = 8.0f;
+    static constexpr float WorldMin = Edge * TileSize;
+    static constexpr float WorldMax = (Size - Edge) * TileSize;
+
     Sea();
 
     void generate(TreasureManager& treasures);
