@@ -86,12 +86,12 @@ namespace bi {
 
   void Hero::render(gf::RenderTarget& target) {
     gf::Sprite sprite;
-    sprite.setAnchor(gf::Anchor::Center);
     sprite.setRotation(m_angle - gf::Pi2); // Pi/2 to align the hero front face
-    sprite.setColor(gf::Color::Red);
+    // sprite.setColor(gf::Color::Red);
     sprite.setTexture(m_texture);
     sprite.setPosition(m_position);
     sprite.setScale(100.0f / 256.0f);
+    sprite.setAnchor(gf::Anchor::Center);
 
     target.draw(sprite);
   }
