@@ -24,7 +24,7 @@ add_executable(islands
   code/local/Singletons.cc
   code/local/Steam.cc
   code/local/Treasure.cc
-  code/local/TreasuresManager.cc
+  code/local/TreasureManager.cc
 )
 
 target_include_directories(islands

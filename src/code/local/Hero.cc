@@ -188,7 +188,7 @@ namespace bi {
       sprite.setTexture(m_boatTexture);
 
       sprite.setScale(BOAT_SIZE / SPRITE_SIZE);
-      sprite.setRotation(m_angle); // Pi/2 to align the hero front face
+      sprite.setRotation(m_angle);
     }
 
     sprite.setPosition(m_position);

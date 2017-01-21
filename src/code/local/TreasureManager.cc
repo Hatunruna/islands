@@ -1,4 +1,4 @@
-#include "TreasuresManager.h"
+#include "TreasureManager.h"
 
 #include <gf/VectorOps.h>
 
@@ -10,11 +10,11 @@ namespace bi {
   : gf::Entity(5)
   , m_heroPosition({ 0.0f, 0.0f }) {
     // Register message
-    gMessageManager().registerHandler<HeroPosition>(&TreasuresManager::onHeroPosition, this);
-    gMessageManager().registerHandler<StartScan>(&TreasuresManager::onStartScan, this);
+    gMessageManager().registerHandler<HeroPosition>(&TreasureManager::onHeroPosition, this);
+    gMessageManager().registerHandler<StartScan>(&TreasureManager::onStartScan, this);
   }
 
-  void TreasuresManager::addTreasure(const gf::Vector2f position) {
+  void TreasureManager::addTreasure(const gf::Vector2f position) {
     // Choose a random treasure
     static constexpr unsigned NUMBER_TREASURE = 4;
     TreasureType treasureType = static_cast<TreasureType>(gRandom().computeUniformInteger<unsigned>(0, NUMBER_TREASURE-1));
@@ -37,20 +37,20 @@ namespace bi {
     }
   }
 
-  void TreasuresManager::update(float dt) {
+  void TreasureManager::update(float dt) {
     for (auto &treasure: m_treasures) {
       treasure.setHeroPosition(m_heroPosition);
       treasure.update(dt);
     }
   }
 
-  void TreasuresManager::render(gf::RenderTarget& target) {
+  void TreasureManager::render(gf::RenderTarget& target) {
     for (auto &treasure: m_treasures) {
       treasure.render(target);
     }
   }
 
-  gf::Vector2f TreasuresManager::getNearestTreasure() const {
+  gf::Vector2f TreasureManager::getNearestTreasure() const {
     const Treasure *treasure = &(m_treasures.front());
     float minDistance = gf::squareDistance(m_heroPosition, treasure->getPosition());
 
@@ -65,7 +65,7 @@ namespace bi {
     return treasure->getPosition() - m_heroPosition;
   }
 
-  gf::MessageStatus TreasuresManager::onHeroPosition(gf::Id id, gf::Message *msg) {
+  gf::MessageStatus TreasureManager::onHeroPosition(gf::Id id, gf::Message *msg) {
     assert(id == HeroPosition::type);
     auto hero = static_cast<HeroPosition*>(msg);
 
@@ -74,7 +74,7 @@ namespace bi {
     return gf::MessageStatus::Keep;
   }
 
-  gf::MessageStatus TreasuresManager::onStartScan(gf::Id id, gf::Message *msg) {
+  gf::MessageStatus TreasureManager::onStartScan(gf::Id id, gf::Message *msg) {
     assert(id == StartScan::type);
     // auto startScan = static_cast<StartScan*>(msg);
 

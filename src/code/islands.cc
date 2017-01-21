@@ -18,7 +18,7 @@
 #include "local/Sea.h"
 #include "local/Singletons.h"
 #include "local/Steam.h"
-#include "local/TreasuresManager.h"
+#include "local/TreasureManager.h"
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
@@ -109,10 +109,6 @@ int main() {
 
   bi::Sea sea;
   sea.generate();
-
-  bi::TreasuresManager treasures;
-  treasures.addTreasure({ 4500.0f, 4000.0f });
-  treasures.addTreasure({ 4500.0f, 4050.0f });
 
   bi::Compass compass;
 

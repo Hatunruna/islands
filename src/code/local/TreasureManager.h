@@ -1,5 +1,5 @@
-#ifndef BI_TREASURES_MANAGER_H
-#define BI_TREASURES_MANAGER_H
+#ifndef BI_TREASURE_MANAGER_H
+#define BI_TREASURE_MANAGER_H
 
 #include <vector>
 
@@ -10,9 +10,9 @@
 #include "Treasure.h"
 
 namespace bi {
-  class TreasuresManager: public gf::Entity {
+  class TreasureManager: public gf::Entity {
   public:
-    TreasuresManager();
+    TreasureManager();
 
     void addTreasure(const gf::Vector2f position);
 
@@ -39,4 +39,4 @@ namespace bi {
   };
 }
 
-#endif // BI_TREASURES_MANAGER_H
+#endif // BI_TREASURE_MANAGER_H
