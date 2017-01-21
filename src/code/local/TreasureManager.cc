@@ -51,16 +51,12 @@ namespace bi {
   }
 
   gf::Vector2f TreasureManager::getNearestTreasure() const {
-    const Treasure *treasure = &(m_treasures.front());
-    float minDistance = gf::squareDistance(m_heroPosition, treasure->getPosition());
+    auto treasure = std::min_element(std::begin(m_treasures), std::end(m_treasures), [this](const Treasure &a, const Treasure &b){
+      float distanceA = gf::squareDistance(m_heroPosition, a.getPosition());
+      float distanceB = gf::squareDistance(m_heroPosition, b.getPosition());
 
-    for (std::size_t i = 1; i < m_treasures.size(); ++i) {
-      float distance = gf::squareDistance(m_heroPosition, m_treasures[i].getPosition());
-      if (minDistance > distance) {
-        minDistance = distance;
-        treasure = &(m_treasures[i]);
-      }
-    }
+      return distanceA < distanceB;
+    });
 
     return treasure->getPosition() - m_heroPosition;
   }
