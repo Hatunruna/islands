@@ -2,6 +2,7 @@
 
 #include <gf/Curves.h>
 #include <gf/RenderTarget.h>
+#include <gf/Sprite.h>
 #include <gf/VectorOps.h>
 
 #include "Singletons.h"
@@ -9,12 +10,17 @@
 namespace bi {
   static constexpr float NORM_COMPASS = 25.0f;
   static constexpr float SCAN_COOLDOWN = 6.0f;
+  static constexpr float COMPASS_SIZE = 80.0f;
+  static constexpr float POINTER_SIZE = 80.0f;
+  static constexpr float SPRITE_SIZE = 256.0f;
 
   Compass::Compass()
   : gf::Entity(0)
   , m_angle(0.0f)
   , m_timeElapsed(0.0f)
-  , m_displayed(false) {
+  , m_displayed(false)
+  , m_compassTexture(gResourceManager().getTexture("compass.png"))
+  , m_pointerTexture(gResourceManager().getTexture("pointer.png")) {
     // Register message
     gMessageManager().registerHandler<StartScan>(&Compass::onStartScan, this);
     gMessageManager().registerHandler<NearestTreasure>(&Compass::onNearestTreasure, this);
@@ -53,11 +59,28 @@ namespace bi {
 
   void Compass::render(gf::RenderTarget& target) {
     if (m_displayed) {
-      // Compute debug arrow
       gf::Vector2f center(gWinGeometry().getXCentered(0.0f), gWinGeometry().getYCentered(0.0f));
-      gf::Vector2f direction = gf::unit(m_angle) * NORM_COMPASS + center;
 
-      gf::Line sprite(center, direction);
+      // Draw the background
+      gf::Sprite compass;
+      compass.setTexture(m_compassTexture);
+      compass.setScale(COMPASS_SIZE / SPRITE_SIZE);
+      compass.setPosition(center);
+      compass.setAnchor(gf::Anchor::Center);
+      target.draw(compass);
+
+      // Draw the pointer
+      gf::Sprite pointer;
+      pointer.setTexture(m_pointerTexture);
+      pointer.setScale(POINTER_SIZE / SPRITE_SIZE);
+      pointer.setPosition(center);
+      pointer.setRotation(m_angle);
+      pointer.setAnchor(gf::Anchor::Center);
+      target.draw(pointer);
+
+      gf::Vector2f centerArrow(gWinGeometry().getXCentered(0.0f), gWinGeometry().getYCentered(0.0f));
+      gf::Vector2f direction = gf::unit(m_angle) * NORM_COMPASS + centerArrow;
+      gf::Line sprite(centerArrow, direction);
       sprite.setColor(gf::Color::Red);
 
       target.draw(sprite);
