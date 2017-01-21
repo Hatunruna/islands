@@ -20,7 +20,7 @@ namespace bi {
 
   static constexpr unsigned Edge = 80;
 
-  static constexpr unsigned TreasureCount = 30;
+  static constexpr unsigned TreasureCount = 1;
 
   static constexpr float WorldMin = Edge * TileSize;
   static constexpr float WorldMax = (Size - Edge) * TileSize;

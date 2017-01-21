@@ -11,16 +11,19 @@ namespace bi {
 
     gf::Vector2f getPosition() const;
     void setHeroPosition(const gf::Vector2f heroPosition);
+    bool isFound() const;
+    void found();
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
 
   private:
-    gf::Texture &m_texture;
+    gf::Texture *m_texture;
     gf::Vector2f m_position;
     float m_SIZE_RENDERED;
     float m_alphaLevel;
     gf::Vector2f m_heroPosition;
+    bool m_isFound;
   };
 }
 

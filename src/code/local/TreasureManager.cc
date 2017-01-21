@@ -1,10 +1,14 @@
 #include "TreasureManager.h"
 
+#include <algorithm>
+
+#include <gf/Log.h>
 #include <gf/VectorOps.h>
 
 #include "Singletons.h"
 
 namespace bi {
+  static constexpr float HITBOX_LIMIT = 60.0f;
 
   TreasureManager::TreasureManager()
   : gf::Entity(5)
@@ -41,7 +45,23 @@ namespace bi {
     for (auto &treasure: m_treasures) {
       treasure.setHeroPosition(m_heroPosition);
       treasure.update(dt);
+
+      float distance = gf::squareDistance(m_heroPosition, treasure.getPosition());
+      if (distance <= HITBOX_LIMIT * HITBOX_LIMIT) {
+        treasure.found();
+        // Sent event
+      }
     }
+
+    auto trash = std::partition(m_treasures.begin(), m_treasures.end(), [](Treasure treasure) {
+      return !(treasure.isFound());
+    });
+
+    for (auto it = trash; it != m_treasures.end(); ++it) {
+      assert(it->isFound());
+    }
+
+    m_treasures.erase(trash, m_treasures.end());
   }
 
   void TreasureManager::render(gf::RenderTarget& target) {

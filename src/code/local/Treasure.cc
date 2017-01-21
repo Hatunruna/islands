@@ -13,12 +13,13 @@ namespace bi {
 
   Treasure::Treasure(const gf::Vector2f postion, const float sizeRendered, const gf::Path texturePath)
   : gf::Entity(5)
-  , m_texture(gResourceManager().getTexture(texturePath))
+  , m_texture(&(gResourceManager().getTexture(texturePath)))
   , m_position(postion)
   , m_SIZE_RENDERED(sizeRendered)
   , m_alphaLevel(0.0f)
-  , m_heroPosition({ 0.0f, 0.0f }) {
-    m_texture.setSmooth(true);
+  , m_heroPosition({ 0.0f, 0.0f })
+  , m_isFound(false) {
+    m_texture->setSmooth(true);
   }
 
   gf::Vector2f Treasure::getPosition() const {
@@ -29,6 +30,14 @@ namespace bi {
     m_heroPosition = heroPosition;
   }
 
+  bool Treasure::isFound() const {
+    return m_isFound;
+  }
+
+  void Treasure::found() {
+    m_isFound = true;
+  }
+
   void Treasure::update(float dt) {
     float distance = gf::euclideanDistance(m_position, m_heroPosition);
     m_alphaLevel = (LIMIT_VIEW - distance) / (LIMIT_VIEW - 50.0f);
@@ -37,7 +46,7 @@ namespace bi {
 
   void Treasure::render(gf::RenderTarget& target) {
     gf::Sprite sprite;
-    sprite.setTexture(m_texture);
+    sprite.setTexture(*m_texture);
     sprite.setPosition(m_position);
     sprite.setScale(m_SIZE_RENDERED / SPRITE_SIZE);
     sprite.setColor({ 1.0f, 1.0f, 1.0f, m_alphaLevel });
