@@ -44,6 +44,8 @@ namespace bi {
     gf::Vector2f m_position;
     float m_angle;
     gf::Texture &m_texture;
+    float m_timeElapsed;
+    bool m_alternateStep;
   };
 }
 

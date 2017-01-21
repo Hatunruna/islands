@@ -1,5 +1,6 @@
 #include "Hero.h"
 
+#include <gf/Log.h>
 #include <gf/RenderTarget.h>
 #include <gf/Shapes.h>
 #include <gf/Sprite.h>
@@ -12,6 +13,8 @@ namespace bi {
   static constexpr float VELOCITY = 100.0f;
   static constexpr float SPRITE_SIZE = 256.0f;
   static constexpr float HERO_SIZE = 96.0f;
+  static constexpr float STEP_TIME = 0.25f;
+  static constexpr float STEP_ANGLE = 10.0f * gf::Pi / 180.0f; // rad
 
   Hero::Hero(const gf::Vector2f postion)
   : gf::Entity(10)
@@ -19,7 +22,9 @@ namespace bi {
   , m_move(Move::NONE)
   , m_position(postion)
   , m_angle(0.0f)
-  , m_texture(gResourceManager().getTexture("tricorn.png")) {
+  , m_texture(gResourceManager().getTexture("tricorn.png"))
+  , m_timeElapsed(0.0f)
+  , m_alternateStep(true) {
 
   }
 
@@ -55,6 +60,8 @@ namespace bi {
   }
 
   void Hero::update(float dt) {
+    m_timeElapsed += dt;
+
     // Set the new angle
     switch (m_turn) {
     case Turn::RIGHT:
@@ -66,6 +73,12 @@ namespace bi {
     case Turn::NONE:
       // Nothing
       break;
+    }
+
+    // Manage the step "animation"
+    if (m_timeElapsed > STEP_TIME) {
+      m_timeElapsed -= STEP_TIME;
+      m_alternateStep = !m_alternateStep;
     }
 
     // Set the velocity
@@ -95,7 +108,17 @@ namespace bi {
 
   void Hero::render(gf::RenderTarget& target) {
     gf::Sprite sprite;
-    sprite.setRotation(m_angle - gf::Pi2); // Pi/2 to align the hero front face
+
+    // Render the step
+    float angleRendered = m_angle;
+    if (m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
+      angleRendered += STEP_ANGLE;
+    }
+    else if (!m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
+      angleRendered -= STEP_ANGLE;
+    }
+    sprite.setRotation(angleRendered - gf::Pi2); // Pi/2 to align the hero front face
+
     sprite.setTexture(m_texture);
     sprite.setPosition(m_position);
     sprite.setScale(HERO_SIZE / SPRITE_SIZE);
