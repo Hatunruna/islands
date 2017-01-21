@@ -3,7 +3,7 @@
 #include "Singletons.h"
 
 namespace bi {
-  static constexpr unsigned NUMBER_TREASURE = 1;
+  static constexpr unsigned NUMBER_TREASURE = 2;
 
   TreasuresManager::TreasuresManager()
   : gf::Entity(10) {
@@ -18,6 +18,9 @@ namespace bi {
     case TreasureType::BONES:
       m_treasures.push_back(Treasure(position, 40.0f, "bones.png"));
       break;
+
+    case TreasureType::NECKLACE:
+      m_treasures.push_back(Treasure(position, 40.0f, "relics_01.png"));
     }
   }
 

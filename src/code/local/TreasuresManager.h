@@ -21,6 +21,7 @@ namespace bi {
   private:
     enum class TreasureType: unsigned {
       BONES,
+      NECKLACE,
     };
 
   private:

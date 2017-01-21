@@ -98,6 +98,7 @@ int main() {
 
   bi::TreasuresManager treasures;
   treasures.addTreasure({ 500.0f, 0.0f });
+  treasures.addTreasure({ 500.0f, 50.0f });
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
