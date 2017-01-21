@@ -1,6 +1,5 @@
 #include "Compass.h"
 
-#include <gf/Curves.h>
 #include <gf/RenderTarget.h>
 #include <gf/Sprite.h>
 #include <gf/VectorOps.h>
@@ -77,13 +76,6 @@ namespace bi {
       pointer.setRotation(m_angle);
       pointer.setAnchor(gf::Anchor::Center);
       target.draw(pointer);
-
-      gf::Vector2f centerArrow(gWinGeometry().getXCentered(0.0f), gWinGeometry().getYCentered(0.0f));
-      gf::Vector2f direction = gf::unit(m_angle) * NORM_COMPASS + centerArrow;
-      gf::Line sprite(centerArrow, direction);
-      sprite.setColor(gf::Color::Red);
-
-      target.draw(sprite);
     }
   }
 }
