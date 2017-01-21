@@ -50,7 +50,10 @@ namespace bi {
     Move m_move;
     gf::Vector2f m_position;
     float m_angle;
-    gf::Texture &m_texture;
+
+    gf::Texture &m_hatTexture;
+    gf::Texture &m_boatTexture;
+
     float m_timeElapsed;
     bool m_alternateStep;
     bool m_isOnIsland;

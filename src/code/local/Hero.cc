@@ -22,12 +22,14 @@ namespace bi {
   , m_move(Move::NONE)
   , m_position(postion)
   , m_angle(0.0f)
-  , m_texture(gResourceManager().getTexture("tricorn.png"))
+  , m_hatTexture(gResourceManager().getTexture("tricorn.png"))
+  , m_boatTexture(gResourceManager().getTexture("boat.png"))
   , m_timeElapsed(0.0f)
   , m_alternateStep(true)
   , m_isOnIsland(true)
   , m_isFrozen(false) {
-    m_texture.setSmooth(true);
+    m_hatTexture.setSmooth(true);
+    m_boatTexture.setSmooth(true);
 
     // Register message
     gMessageManager().registerHandler<StartScan>(&Hero::onStartScan, this);
@@ -157,7 +159,7 @@ namespace bi {
     }
     sprite.setRotation(angleRendered - gf::Pi2); // Pi/2 to align the hero front face
 
-    sprite.setTexture(m_texture);
+    sprite.setTexture(m_hatTexture);
     sprite.setPosition(m_position);
     sprite.setScale(HERO_SIZE / SPRITE_SIZE);
     sprite.setAnchor(gf::Anchor::Center);
