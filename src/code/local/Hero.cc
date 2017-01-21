@@ -31,6 +31,7 @@ namespace bi {
 
     // Register message
     gMessageManager().registerHandler<StartScan>(&Hero::onStartScan, this);
+    gMessageManager().registerHandler<StopScan>(&Hero::onStopScan, this);
   }
 
   void Hero::moveForward() {
@@ -77,6 +78,15 @@ namespace bi {
     // auto startScan = static_cast<StartScan*>(msg);
 
     m_isFrozen = true;
+
+    return gf::MessageStatus::Keep;
+  }
+
+  gf::MessageStatus Hero::onStopScan(gf::Id id, gf::Message *msg) {
+    assert(id == StopScan::type);
+    // auto startScan = static_cast<StartScan*>(msg);
+
+    m_isFrozen = false;
 
     return gf::MessageStatus::Keep;
   }

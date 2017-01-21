@@ -40,6 +40,7 @@ namespace bi {
     bool scanAvailable() const;
 
     gf::MessageStatus onStartScan(gf::Id id, gf::Message *msg);
+    gf::MessageStatus onStopScan(gf::Id id, gf::Message *msg);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;

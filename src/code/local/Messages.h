@@ -19,6 +19,10 @@ namespace bi {
     static constexpr gf::Id type = "StartScan"_id;
   };
 
+  struct StopScan: public gf::Message {
+    static constexpr gf::Id type = "StopScan"_id;
+  };
+
   struct NearestTreasure: public gf::Message {
     static constexpr gf::Id type = "NearestTreasure"_id;
 

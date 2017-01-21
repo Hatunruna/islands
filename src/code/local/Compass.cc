@@ -45,6 +45,8 @@ namespace bi {
       if (m_timeElapsed > SCAN_COOLDOWN) {
         m_timeElapsed = 0.0f;
         m_displayed = false;
+        StopScan message;
+        gMessageManager().sendMessage(&message);
       }
     }
   }
