@@ -26,6 +26,7 @@ add_executable(islands
   code/local/Steam.cc
   code/local/Treasure.cc
   code/local/TreasureManager.cc
+  code/local/WaveManager.cc
 )
 
 target_include_directories(islands
