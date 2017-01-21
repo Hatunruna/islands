@@ -12,6 +12,7 @@ namespace bi {
   static constexpr float TURRET_SIZE = 76.0f;
   static constexpr float SPRITE_SIZE = 256.0f;
   static constexpr float RADUIS_TARGET_TURRET = 350.0f;
+  static constexpr float RADUIS_HIT = 30.0f;
   static constexpr float COOLDOWN_FIRE = 1.0f;
 
   TurretManager::TurretManager()
@@ -33,7 +34,13 @@ namespace bi {
       for (auto &bullet: turret.bullets) {
         bullet.position += bullet.velocity * dt;
         bullet.timeElapsed += dt;
-        if (bullet.timeElapsed >= 6.0f) {
+        float distance = gf::squareDistance(m_heroPosition, bullet.position);
+        if (distance <= RADUIS_HIT * RADUIS_HIT) {
+          // Set hit message here
+          bullet.active = false;
+          gf::Log::print("hit\n");
+        }
+        else if (bullet.timeElapsed >= 6.0f) {
           bullet.active = false;
         }
       }
