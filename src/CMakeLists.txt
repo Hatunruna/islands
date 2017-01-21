@@ -21,6 +21,7 @@ add_executable(islands
   code/local/Hero.cc
   code/local/Sea.cc
   code/local/Singletons.cc
+  code/local/Treasure.cc
 )
 
 target_include_directories(islands

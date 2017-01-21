@@ -25,7 +25,7 @@ namespace bi {
   , m_texture(gResourceManager().getTexture("tricorn.png"))
   , m_timeElapsed(0.0f)
   , m_alternateStep(true) {
-
+    m_texture.setSmooth(true);
   }
 
   void Hero::moveForward() {

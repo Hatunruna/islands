@@ -15,6 +15,7 @@
 #include "local/Messages.h"
 #include "local/Sea.h"
 #include "local/Singletons.h"
+#include "local/Treasure.h"
 
 int main() {
   static constexpr gf::Vector2u ScreenSize(1024, 576);
@@ -91,12 +92,16 @@ int main() {
 
   // entities
   bi::Hero hero({ 0.0f, 0.0f });
+
   bi::Sea sea;
   sea.generate();
+
+  bi::Treasure treasure({ 500.0f, 0.0f }, 64.0f, "bones.png");
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
   mainEntities.addEntity(sea);
+  mainEntities.addEntity(treasure);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
