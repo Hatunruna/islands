@@ -20,6 +20,7 @@
 #include "local/Singletons.h"
 #include "local/Steam.h"
 #include "local/TreasureManager.h"
+#include "local/TurretManager.h"
 #include "local/WaveManager.h"
 
 int main() {
@@ -119,12 +120,16 @@ int main() {
 
   bi::WaveManager waves;
 
+  bi::TurretManager turrets;
+  turrets.addTurret({ 4500.0f, 4000.0f });
+
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
   mainEntities.addEntity(sea);
   mainEntities.addEntity(treasures);
   mainEntities.addEntity(steam);
   mainEntities.addEntity(waves);
+  mainEntities.addEntity(turrets);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities

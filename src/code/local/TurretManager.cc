@@ -1,11 +1,22 @@
 #include "TurretManager.h"
 
+#include <gf/RenderTarget.h>
+#include <gf/Sprite.h>
+
 #include "Singletons.h"
 
 namespace bi {
-  TurretManager::TurretManager() {
+  static constexpr float TURRET_SIZE = 76.0f;
+  static constexpr float SPRITE_SIZE = 256.0f;
+
+  TurretManager::TurretManager()
+  : m_turretTexture(gResourceManager().getTexture("turret.png")) {
     // Event
     gMessageManager().registerHandler<HeroPosition>(&TurretManager::onHeroPosition, this);
+  }
+
+  void TurretManager::addTurret(gf::Vector2f position) {
+    m_turrets.push_back(Turret(position));
   }
 
   void TurretManager::update(float dt) {
@@ -35,9 +46,15 @@ namespace bi {
   }
 
   void TurretManager::render(gf::RenderTarget& target) {
-    // for (auto &treasure: m_treasures) {
-    //   treasure.render(target);
-    // }
+    for (auto &turret: m_turrets) {
+      gf::Sprite sprite;
+      sprite.setTexture(m_turretTexture);
+      sprite.setPosition(turret.position);
+      sprite.setScale(TURRET_SIZE / SPRITE_SIZE);
+      sprite.setAnchor(gf::Anchor::Center);
+
+      target.draw(sprite);
+    }
   }
 
   gf::MessageStatus TurretManager::onHeroPosition(gf::Id id, gf::Message *msg) {
