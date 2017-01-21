@@ -22,6 +22,7 @@ add_executable(islands
   code/local/Hero.cc
   code/local/Sea.cc
   code/local/Singletons.cc
+  code/local/Steam.cc
   code/local/Treasure.cc
   code/local/TreasuresManager.cc
 )

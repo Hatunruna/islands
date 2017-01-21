@@ -12,7 +12,7 @@ namespace bi {
     static constexpr gf::Id type = "HeroPosition"_id;
 
     gf::Vector2f position;
-    float elevation;
+    bool isOnIsland;
   };
 
 }

@@ -16,6 +16,7 @@
 #include "local/Messages.h"
 #include "local/Sea.h"
 #include "local/Singletons.h"
+#include "local/Steam.h"
 #include "local/TreasuresManager.h"
 
 int main() {
@@ -94,6 +95,9 @@ int main() {
   actions.addAction(downAction);
 
   // entities
+  bi::Steam steam;
+//   steam.run();
+
   bi::Hero hero({ 0.0f, 0.0f });
 
   bi::Sea sea;
@@ -109,6 +113,7 @@ int main() {
   mainEntities.addEntity(hero);
   mainEntities.addEntity(sea);
   mainEntities.addEntity(treasures);
+  mainEntities.addEntity(steam);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities

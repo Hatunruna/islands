@@ -12,7 +12,7 @@ namespace bi {
   static constexpr float ANGULAR_VELOCITY = 1.0f;
   static constexpr float VELOCITY = 100.0f;
   static constexpr float SPRITE_SIZE = 256.0f;
-  static constexpr float HERO_SIZE = 96.0f;
+  static constexpr float HERO_SIZE = 64.0f;
   static constexpr float STEP_TIME = 0.25f;
   static constexpr float STEP_ANGLE = 10.0f * gf::Pi / 180.0f; // rad
 

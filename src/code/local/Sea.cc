@@ -218,7 +218,7 @@ namespace bi {
     unsigned col = static_cast<unsigned>(hero->position.x / TileSize);
     unsigned row = static_cast<unsigned>(hero->position.y / TileSize);
 
-    hero->elevation = m_sea({ row, col }).elevation;
+    hero->isOnIsland = (m_sea({ row, col }).elevation > 0.5f);
 
     m_hero.x = col;
     m_hero.y = row;
