@@ -18,7 +18,11 @@ namespace bi {
     gf::MessageStatus onNearestTreasure(gf::Id id, gf::Message *msg);
 
   private:
-    float m_angle;
+    float m_perfectAngleTarget;
+    float m_estimatedAngleTarget;
+    float m_currentAngleTarget;
+    float m_stepAngle;
+    unsigned m_currentStep;
     float m_timeElapsed;
     bool m_displayed;
     gf::Texture &m_compassTexture;
