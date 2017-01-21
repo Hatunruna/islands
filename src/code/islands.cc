@@ -3,6 +3,7 @@
 #include <gf/Color.h>
 #include <gf/EntityContainer.h>
 #include <gf/Event.h>
+#include <gf/Gamepad.h>
 #include <gf/Log.h>
 #include <gf/Random.h>
 #include <gf/RenderWindow.h>
@@ -171,6 +172,28 @@ int main() {
       hero.moveStop();
     }
 
+
+    // Gamepad Input
+
+    if (event.type == gf::EventType::GamepadConnected) {
+      gf::GamepadId id = gf::Gamepad::open(event.gamepadConnection.id);
+
+      leftAction.addGamepadButtonControl(id,gf::GamepadButton::DPadLeft);
+      leftAction.addGamepadAxisControl(id,gf::GamepadAxis::LeftX,gf::GamepadAxisDirection::Negative);
+
+      rightAction.addGamepadButtonControl(id,gf::GamepadButton::DPadRight);
+      rightAction.addGamepadAxisControl(id,gf::GamepadAxis::LeftX,gf::GamepadAxisDirection::Positive);
+
+      upAction.addGamepadButtonControl(id,gf::GamepadButton::DPadUp);
+      upAction.addGamepadAxisControl(id,gf::GamepadAxis::LeftY,gf::GamepadAxisDirection::Negative);
+
+      downAction.addGamepadButtonControl(id,gf::GamepadButton::DPadDown);
+      downAction.addGamepadAxisControl(id,gf::GamepadAxis::LeftY,gf::GamepadAxisDirection::Positive);
+    }
+
+    if (event.type == gf::EventType::GamepadDisconnected) {
+        gf::Gamepad::close(event.gamepadDisconnection.id);
+    }
 
     // 2. update
 
