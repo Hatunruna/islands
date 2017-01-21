@@ -102,7 +102,7 @@ int main() {
   bi::Steam steam;
 //   steam.run();
 
-  bi::Hero hero({ 0.0f, 0.0f });
+  bi::Hero hero({ 4000.0f, 4000.0f });
 
   bi::Sea sea;
   sea.generate();

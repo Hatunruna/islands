@@ -10,12 +10,18 @@
 #include "Singletons.h"
 
 namespace bi {
+  static constexpr unsigned Size = 1500;
 
   static constexpr double Scale = 6.0;
   static constexpr double SeaLevel = 0.65;
 
   static constexpr float TileSize = 8.0f;
   static constexpr unsigned HalfRange = 100;
+
+  static constexpr unsigned Edge = 80;
+
+  static constexpr float WorldMin = Edge * TileSize;
+  static constexpr float WorldMax = (Size - Edge) * TileSize;
 
   Sea::Sea()
   : m_vertices(gf::PrimitiveType::Triangles)
@@ -214,6 +220,11 @@ namespace bi {
   gf::MessageStatus Sea::onHeroPosition(gf::Id id, gf::Message *msg) {
     assert(id == HeroPosition::type);
     auto hero = static_cast<HeroPosition*>(msg);
+
+    float x = gf::clamp(hero->position.x, WorldMin, WorldMax);
+    float y = gf::clamp(hero->position.y, WorldMin, WorldMax);
+
+    hero->position = { x, y };
 
     unsigned col = static_cast<unsigned>(hero->position.x / TileSize);
     unsigned row = static_cast<unsigned>(hero->position.y / TileSize);

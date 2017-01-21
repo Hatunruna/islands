@@ -141,6 +141,7 @@ namespace bi {
     gMessageManager().sendMessage(&message);
 
     m_isOnIsland = message.isOnIsland;
+    m_position = message.position;
   }
 
   void Hero::render(gf::RenderTarget& target) {

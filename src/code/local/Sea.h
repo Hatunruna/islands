@@ -11,8 +11,6 @@ namespace bi {
 
   class Sea : public gf::Entity {
   public:
-    static constexpr std::size_t Size = 1000;
-
     Sea();
 
     void generate();
