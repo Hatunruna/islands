@@ -1,7 +1,7 @@
 #ifndef BI_TURRET_MANAGER_H
 #define BI_TURRET_MANAGER_H
 
-#include <queue>
+#include <deque>
 #include <vector>
 
 #include <gf/Entity.h>
@@ -23,18 +23,17 @@ namespace bi {
   private:
     struct Turret {
     public:
-      Turret(gf::Vector2f position) : position(position){}
-
-    public:
       struct Bullet {
-      public:
-
-      private: // Bullet
+        gf::Vector2f position;
+        gf::Vector2f velocity;
+        float timeElapsed;
+        bool active;
       };
 
     public: // Turret
       gf::Vector2f position;
-      std::queue<Bullet> bullets;
+      std::deque<Bullet> bullets;
+      float timeElapsed;
     };
 
   private: // TurretManager
