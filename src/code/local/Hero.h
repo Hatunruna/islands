@@ -8,6 +8,7 @@
 #include <gf/Vector.h>
 
 #include "Messages.h"
+#include "Steam.h"
 
 namespace bi {
   class Hero: public gf::Entity {
@@ -25,7 +26,7 @@ namespace bi {
     };
 
   public:
-    Hero(const gf::Vector2f postion);
+    Hero(Steam& steam, const gf::Vector2f postion);
 
     void moveForward();
     void moveBackward();
@@ -46,6 +47,8 @@ namespace bi {
     virtual void render(gf::RenderTarget& target) override;
 
   private:
+    Steam& m_steam;
+
     Turn m_turn;
     Move m_move;
     gf::Vector2f m_position;
