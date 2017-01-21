@@ -6,6 +6,7 @@
 
 #include <gf/Log.h>
 
+#include "Confetti.h"
 #include "Singletons.h"
 
 namespace bi {
@@ -63,18 +64,15 @@ namespace bi {
 
   void Steam::render(gf::RenderTarget& target) {
     gf::Color4f color(0.5f, 0.5f, 0.5f, 1.0f);
-    gf::CircleShape shape;
+
+    Confetti confetti;
 
     for (const auto& cloud : m_clouds) {
       color.a = cloud.alpha;
-
-      shape.setPosition(cloud.position);
-      shape.setRadius(cloud.radius);
-      shape.setColor(color);
-      shape.setAnchor(gf::Anchor::Center);
-
-      target.draw(shape);
+      confetti.addCircle(cloud.position, cloud.radius, color);
     }
+
+    target.draw(confetti);
   }
 
   gf::MessageStatus Steam::onHeroPosition(gf::Id id, gf::Message *msg) {

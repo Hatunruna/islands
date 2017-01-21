@@ -6,16 +6,17 @@
 
 #include <gf/Log.h>
 
+#include "Confetti.h"
 #include "Sea.h"
 #include "Singletons.h"
 
 namespace bi {
 
-  static constexpr float WaveLifetime = 15.0f;
+  static constexpr float WaveLifetime = 30.0f;
   static constexpr float WaveWidth = 1000.0f;
   static constexpr float WaveVelocity = 90.0f;
 
-  static constexpr float BubblePerSecond = 1000.0f;
+  static constexpr float BubblePerSecond = 2000.0f;
   static constexpr float BubbleAngle = 3 * gf::Pi / 2;
   static constexpr float BubbleLifetime = 3.0f;
   static constexpr float BubbleVelocity = 50.0f;
@@ -101,22 +102,16 @@ namespace bi {
   }
 
   void WaveManager::render(gf::RenderTarget& target) {
-    gf::ColorRamp ramp;
-    ramp.addColorStop(-0.1f, gf::Color::fromRgba32(2, 43, 68, 0));
-    ramp.addColorStop(1.0f, gf::Color::White);
+    gf::Color4f deepBlue = gf::Color::fromRgba32(2, 43, 68, 0);
 
-    gf::CircleShape shape;
+    Confetti confetti;
 
     for (const auto& bubble : m_bubbles) {
-      gf::Color4f color = ramp.computeColor(bubble.lifetime / BubbleLifetime);
-
-      shape.setRadius(bubble.radius);
-      shape.setAnchor(gf::Anchor::Center);
-      shape.setPosition(bubble.position);
-      shape.setColor(color);
-
-      target.draw(shape);
+      gf::Color4f color = gf::lerp(deepBlue, gf::Color::White, bubble.lifetime / BubbleLifetime);
+      confetti.addCircle(bubble.position, bubble.radius, color);
     }
+
+    target.draw(confetti);
   }
 
 }
