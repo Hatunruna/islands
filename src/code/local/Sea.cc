@@ -20,6 +20,8 @@ namespace bi {
 
   static constexpr unsigned Edge = 80;
 
+  static constexpr unsigned TreasureCount = 30;
+
   static constexpr float WorldMin = Edge * TileSize;
   static constexpr float WorldMax = (Size - Edge) * TileSize;
 
@@ -39,7 +41,7 @@ namespace bi {
     return (value - waterLevel) / (1.0 - waterLevel) * 0.5 + 0.5;
   }
 
-  void Sea::generate() {
+  void Sea::generate(TreasureManager& treasures) {
     // generate the elevation
 
     gf::SimplexNoise2D simplex(gRandom());
@@ -72,7 +74,22 @@ namespace bi {
       assert(0.0 <= val.elevation && val.elevation <= 1.0);
     }
 
-    // TODO: edges and cut islands
+    // treasures
+
+    for (unsigned i = 0; i < TreasureCount; ++i) {
+      gf::Vector2f position;
+      unsigned col, row;
+
+      do {
+        position.x = gRandom().computeUniformFloat(WorldMin, WorldMax);
+        position.y = gRandom().computeUniformFloat(WorldMin, WorldMax);
+
+        col = static_cast<unsigned>(position.x / TileSize);
+        row = static_cast<unsigned>(position.y / TileSize);
+      } while (m_sea({ row, col }).elevation < 0.52f);
+
+      treasures.addTreasure(position);
+    }
 
 
     // compute colors

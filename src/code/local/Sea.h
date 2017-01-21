@@ -7,13 +7,15 @@
 #include <gf/Random.h>
 #include <gf/VertexArray.h>
 
+#include "TreasureManager.h"
+
 namespace bi {
 
   class Sea : public gf::Entity {
   public:
     Sea();
 
-    void generate();
+    void generate(TreasureManager& treasures);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;

@@ -107,8 +107,12 @@ int main() {
 
   bi::Hero hero(steam, { 4000.0f, 4000.0f });
 
+  bi::TreasureManager treasures;
+  treasures.addTreasure({ 100.0f, 0.0f });
+  treasures.addTreasure({ 500.0f, 50.0f });
+
   bi::Sea sea;
-  sea.generate();
+  sea.generate(treasures);
 
   bi::Compass compass;
 
