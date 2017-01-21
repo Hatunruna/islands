@@ -47,6 +47,13 @@ namespace bi {
     m_turn = Turn::NONE;
   }
 
+  void Hero::sendInitialPosition() const {
+    // Send the position message
+    HeroPosition message;
+    message.position = m_position;
+    gMessageManager().sendMessage(&message);
+  }
+
   void Hero::update(float dt) {
     // Set the new angle
     switch (m_turn) {

@@ -33,6 +33,8 @@ namespace bi {
     void turnRight();
     void turnNone();
 
+    void sendInitialPosition() const;
+
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
 
