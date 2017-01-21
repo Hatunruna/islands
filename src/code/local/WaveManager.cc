@@ -101,14 +101,12 @@ namespace bi {
   }
 
   void WaveManager::render(gf::RenderTarget& target) {
-    gf::ColorRamp ramp;
-    ramp.addColorStop(-0.1f, gf::Color::fromRgba32(2, 43, 68, 0));
-    ramp.addColorStop(1.0f, gf::Color::White);
+    gf::Color4f deepBlue = gf::Color::fromRgba32(2, 43, 68, 0);
 
     gf::CircleShape shape;
 
     for (const auto& bubble : m_bubbles) {
-      gf::Color4f color = ramp.computeColor(bubble.lifetime / BubbleLifetime);
+      gf::Color4f color = gf::lerp(deepBlue, gf::Color::White, bubble.lifetime / BubbleLifetime);
 
       shape.setRadius(bubble.radius);
       shape.setAnchor(gf::Anchor::Center);
