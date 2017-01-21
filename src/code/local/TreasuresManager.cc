@@ -7,7 +7,7 @@
 namespace bi {
 
   TreasuresManager::TreasuresManager()
-  : gf::Entity(10)
+  : gf::Entity(5)
   , m_heroPosition({ 0.0f, 0.0f }) {
     // Register message
     gMessageManager().registerHandler<HeroPosition>(&TreasuresManager::onHeroPosition, this);
@@ -39,6 +39,7 @@ namespace bi {
 
   void TreasuresManager::update(float dt) {
     for (auto &treasure: m_treasures) {
+      treasure.setHeroPosition(m_heroPosition);
       treasure.update(dt);
     }
   }

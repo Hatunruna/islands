@@ -9,25 +9,34 @@
 #include "Singletons.h"
 
 namespace bi {
-  static constexpr float ANGULAR_VELOCITY = 1.0f;
-  static constexpr float VELOCITY = 100.0f;
+  static constexpr float HERO_ANGULAR_VELOCITY = 1.5f;
+  static constexpr float HERO_VELOCITY = 100.0f;
+
+  static constexpr float BOAT_ANGULAR_VELOCITY = 0.5f;
+  static constexpr float BOAT_VELOCITY = 200.0f;
+
   static constexpr float SPRITE_SIZE = 256.0f;
   static constexpr float HERO_SIZE = 64.0f;
+  static constexpr float BOAT_SIZE = 128.0f;
+
   static constexpr float STEP_TIME = 0.25f;
   static constexpr float STEP_ANGLE = 10.0f * gf::Pi / 180.0f; // rad
 
-  Hero::Hero(const gf::Vector2f postion)
+  Hero::Hero(Steam& steam, const gf::Vector2f postion)
   : gf::Entity(10)
+  , m_steam(steam)
   , m_turn(Turn::NONE)
   , m_move(Move::NONE)
   , m_position(postion)
   , m_angle(0.0f)
-  , m_texture(gResourceManager().getTexture("tricorn.png"))
+  , m_hatTexture(gResourceManager().getTexture("tricorn.png"))
+  , m_boatTexture(gResourceManager().getTexture("boat.png"))
   , m_timeElapsed(0.0f)
   , m_alternateStep(true)
   , m_isOnIsland(true)
   , m_isFrozen(false) {
-    m_texture.setSmooth(true);
+    m_hatTexture.setSmooth(true);
+    m_boatTexture.setSmooth(true);
 
     // Register message
     gMessageManager().registerHandler<StartScan>(&Hero::onStartScan, this);
@@ -94,15 +103,17 @@ namespace bi {
   void Hero::update(float dt) {
     m_timeElapsed += dt;
 
-    // If not forzen
+    // If not frozen
     if (!m_isFrozen) {
       // Set the new angle
+      float angularVelocity = m_isOnIsland ? HERO_ANGULAR_VELOCITY : BOAT_ANGULAR_VELOCITY;
+
       switch (m_turn) {
       case Turn::RIGHT:
-        m_angle += ANGULAR_VELOCITY * dt;
+        m_angle += angularVelocity * dt;
         break;
       case Turn::LEFT:
-        m_angle -= ANGULAR_VELOCITY * dt;
+        m_angle -= angularVelocity * dt;
         break;
       case Turn::NONE:
         // Nothing
@@ -116,14 +127,16 @@ namespace bi {
       }
 
       // Set the velocity
-      float velocity = 0.0f;
+      float velocity = m_isOnIsland ? HERO_VELOCITY : BOAT_VELOCITY;
+      float distance = 0.0f;
+
       switch (m_move) {
       case Move::FORWARD:
-        velocity = VELOCITY * dt;
+        distance = velocity * dt;
         break;
 
       case Move::BACKWARD:
-        velocity = -VELOCITY * dt;
+        distance = -velocity * dt;
         break;
 
       case Move::NONE:
@@ -132,12 +145,19 @@ namespace bi {
       }
 
       // Compute the new position
-      m_position += gf::unit(m_angle) * velocity;
+      m_position += gf::unit(m_angle) * distance;
+    }
+
+    if (!m_isOnIsland) {
+      m_steam.run();
+    } else {
+      m_steam.stop();
     }
 
     // Send the position message
     HeroPosition message;
     message.position = m_position;
+    message.angle = m_angle;
     gMessageManager().sendMessage(&message);
 
     m_isOnIsland = message.isOnIsland;
@@ -147,19 +167,31 @@ namespace bi {
   void Hero::render(gf::RenderTarget& target) {
     gf::Sprite sprite;
 
-    // Render the step
-    float angleRendered = m_angle;
-    if (!m_isFrozen && m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
-      angleRendered += STEP_ANGLE;
-    }
-    else if (!m_isFrozen && !m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
-      angleRendered -= STEP_ANGLE;
-    }
-    sprite.setRotation(angleRendered - gf::Pi2); // Pi/2 to align the hero front face
+    if (m_isOnIsland) {
+      // Render the step
+      float angleRendered = m_angle;
 
-    sprite.setTexture(m_texture);
+      if (!m_isFrozen && m_move != Move::NONE) {
+        if (m_alternateStep) {
+          angleRendered += STEP_ANGLE;
+        } else {
+          angleRendered -= STEP_ANGLE;
+        }
+      }
+
+      sprite.setTexture(m_hatTexture);
+
+      sprite.setScale(HERO_SIZE / SPRITE_SIZE);
+      sprite.setRotation(angleRendered - gf::Pi2); // Pi/2 to align the hero front face
+
+    } else {
+      sprite.setTexture(m_boatTexture);
+
+      sprite.setScale(BOAT_SIZE / SPRITE_SIZE);
+      sprite.setRotation(m_angle); // Pi/2 to align the hero front face
+    }
+
     sprite.setPosition(m_position);
-    sprite.setScale(HERO_SIZE / SPRITE_SIZE);
     sprite.setAnchor(gf::Anchor::Center);
 
     target.draw(sprite);

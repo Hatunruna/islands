@@ -9,7 +9,7 @@
 #include "Singletons.h"
 
 namespace bi {
-  static constexpr float Velocity = 10.0f;
+  static constexpr float Velocity = 15.0f;
 
   static constexpr float InitialAlpha = 0.5f;
   static constexpr float AlphaFading = 0.1f;
@@ -17,11 +17,12 @@ namespace bi {
   static constexpr float InitialRadius = 16.0f;
   static constexpr float RadiusIncrease = 5.0f;
 
-  static constexpr float GenerationTime = 0.1f;
+  static constexpr float GenerationTime = 0.04f;
 
   Steam::Steam()
   : gf::Entity(20)
-  , m_hero(0, 0)
+  , m_heroPosition(0, 0)
+  , m_heroAngle(0)
   , m_timer(0)
   , m_running(false)
   {
@@ -50,7 +51,7 @@ namespace bi {
     }
 
     Cloud cloud;
-    cloud.position = m_hero;
+    cloud.position = m_heroPosition - gf::unit(m_heroAngle) * 40; // magic!
     cloud.angle = gRandom().computeUniformFloat(0.0f, 2 * gf::Pi);
     cloud.radius = InitialRadius;
     cloud.alpha = InitialAlpha;
@@ -79,7 +80,8 @@ namespace bi {
   gf::MessageStatus Steam::onHeroPosition(gf::Id id, gf::Message *msg) {
     assert(id == HeroPosition::type);
     auto hero = static_cast<HeroPosition*>(msg);
-    m_hero = hero->position;
+    m_heroPosition = hero->position;
+    m_heroAngle = hero->angle;
     return gf::MessageStatus::Keep;
   }
 
