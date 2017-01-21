@@ -13,6 +13,7 @@
 
 #include "config.h"
 #include "local/Compass.h"
+#include "local/Gold.h"
 #include "local/Hero.h"
 #include "local/Messages.h"
 #include "local/Sea.h"
@@ -108,13 +109,12 @@ int main() {
   bi::Hero hero(steam, { 4000.0f, 4000.0f });
 
   bi::TreasureManager treasures;
-  treasures.addTreasure({ 100.0f, 0.0f });
-  treasures.addTreasure({ 500.0f, 50.0f });
 
   bi::Sea sea;
   sea.generate(treasures);
 
   bi::Compass compass;
+  bi::Gold gold;
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
@@ -125,6 +125,7 @@ int main() {
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
   hudEntities.addEntity(compass);
+  hudEntities.addEntity(gold);
 
   // game loop
   renderer.clear(gf::Color::Black);
