@@ -11,6 +11,7 @@
 #include <gf/Window.h>
 
 #include "config.h"
+#include "local/Compass.h"
 #include "local/Hero.h"
 #include "local/Messages.h"
 #include "local/Sea.h"
@@ -31,6 +32,7 @@ int main() {
   gf::SingletonStorage<gf::MessageManager> storageForMessageManager(bi::gMessageManager);
   gf::SingletonStorage<gf::ResourceManager> storageForResourceManager(bi::gResourceManager);
   gf::SingletonStorage<gf::Random> storageForRandom(bi::gRandom);
+  gf::SingletonStorage<gf::WindowGeometryTracker> storageForWindowGeometryTracker(bi::gWinGeometry);
 
   bi::gResourceManager().addSearchDir(ISLANDS_DATA_DIR);
 
@@ -45,6 +47,7 @@ int main() {
   views.addView(hudView);
 
   views.setInitialScreenSize(ScreenSize);
+  bi::gWinGeometry().setInitialScreenSize(ScreenSize);
 
   bi::gMessageManager().registerHandler<bi::HeroPosition>([&mainView](gf::Id type, gf::Message *msg) {
     assert(type == bi::HeroPosition::type);
@@ -97,8 +100,10 @@ int main() {
   sea.generate();
 
   bi::TreasuresManager treasures;
-  treasures.addTreasure({ 500.0f, 0.0f });
+  // treasures.addTreasure({ 500.0f, 0.0f });
   treasures.addTreasure({ 500.0f, 50.0f });
+
+  bi::Compass compass;
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
@@ -107,6 +112,7 @@ int main() {
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
+  hudEntities.addEntity(compass);
 
   // game loop
   renderer.clear(gf::Color::Black);
@@ -121,6 +127,7 @@ int main() {
     while (window.pollEvent(event)) {
       actions.processEvent(event);
       views.processEvent(event);
+      bi::gWinGeometry().processEvent(event);
     }
 
     if (closeWindowAction.isActive()) {
