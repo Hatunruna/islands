@@ -6,7 +6,7 @@
 
 namespace bi {
 
-  TreasuresManager::TreasuresManager()
+  TreasureManager::TreasureManager()
   : gf::Entity(5)
   , m_heroPosition({ 0.0f, 0.0f }) {
     // Register message
