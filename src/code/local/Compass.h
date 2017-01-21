@@ -2,6 +2,7 @@
 #define BI_COMPASS_H
 
 #include <gf/Entity.h>
+#include <gf/Texture.h>
 
 #include "Messages.h"
 
@@ -20,6 +21,8 @@ namespace bi {
     float m_angle;
     float m_timeElapsed;
     bool m_displayed;
+    gf::Texture &m_compassTexture;
+    gf::Texture &m_pointerTexture;
   };
 }
 
