@@ -15,6 +15,10 @@ namespace bi {
     bool isOnIsland;
   };
 
+  struct StartScan: public gf::Message {
+    static constexpr gf::Id type = "StartScan"_id;
+  };
+
 }
 
 #endif // BI_MESSAGES_H

@@ -24,8 +24,13 @@ namespace bi {
   , m_angle(0.0f)
   , m_texture(gResourceManager().getTexture("tricorn.png"))
   , m_timeElapsed(0.0f)
-  , m_alternateStep(true) {
+  , m_alternateStep(true)
+  , m_isOnIsland(true)
+  , m_isFrozen(false) {
     m_texture.setSmooth(true);
+
+    // Register message
+    gMessageManager().registerHandler<StartScan>(&Hero::onStartScan, this);
   }
 
   void Hero::moveForward() {
@@ -59,51 +64,73 @@ namespace bi {
     gMessageManager().sendMessage(&message);
   }
 
+  bool Hero::isOnIsland() const {
+    return m_isOnIsland;
+  }
+
+  bool Hero::scanAvailable() const {
+    return m_isOnIsland && !m_isFrozen;
+  }
+
+  gf::MessageStatus Hero::onStartScan(gf::Id id, gf::Message *msg) {
+    assert(id == StartScan::type);
+    // auto startScan = static_cast<StartScan*>(msg);
+
+    m_isFrozen = true;
+
+    return gf::MessageStatus::Keep;
+  }
+
   void Hero::update(float dt) {
     m_timeElapsed += dt;
 
-    // Set the new angle
-    switch (m_turn) {
-    case Turn::RIGHT:
-      m_angle += ANGULAR_VELOCITY * dt;
-      break;
-    case Turn::LEFT:
-      m_angle -= ANGULAR_VELOCITY * dt;
-      break;
-    case Turn::NONE:
-      // Nothing
-      break;
+    // If not forzen
+    if (!m_isFrozen) {
+      // Set the new angle
+      switch (m_turn) {
+      case Turn::RIGHT:
+        m_angle += ANGULAR_VELOCITY * dt;
+        break;
+      case Turn::LEFT:
+        m_angle -= ANGULAR_VELOCITY * dt;
+        break;
+      case Turn::NONE:
+        // Nothing
+        break;
+      }
+
+      // Manage the step "animation"
+      if (m_timeElapsed > STEP_TIME) {
+        m_timeElapsed -= STEP_TIME;
+        m_alternateStep = !m_alternateStep;
+      }
+
+      // Set the velocity
+      float velocity = 0.0f;
+      switch (m_move) {
+      case Move::FORWARD:
+        velocity = VELOCITY * dt;
+        break;
+
+      case Move::BACKWARD:
+        velocity = -VELOCITY * dt;
+        break;
+
+      case Move::NONE:
+        // Nothing
+        break;
+      }
+
+      // Compute the new position
+      m_position += gf::unit(m_angle) * velocity;
     }
-
-    // Manage the step "animation"
-    if (m_timeElapsed > STEP_TIME) {
-      m_timeElapsed -= STEP_TIME;
-      m_alternateStep = !m_alternateStep;
-    }
-
-    // Set the velocity
-    float velocity = 0.0f;
-    switch (m_move) {
-    case Move::FORWARD:
-      velocity = VELOCITY * dt;
-      break;
-
-    case Move::BACKWARD:
-      velocity = -VELOCITY * dt;
-      break;
-
-    case Move::NONE:
-      // Nothing
-      break;
-    }
-
-    // Compute the new position
-    m_position += gf::unit(m_angle) * velocity;
 
     // Send the position message
     HeroPosition message;
     message.position = m_position;
     gMessageManager().sendMessage(&message);
+
+    m_isOnIsland = message.isOnIsland;
   }
 
   void Hero::render(gf::RenderTarget& target) {
@@ -111,10 +138,10 @@ namespace bi {
 
     // Render the step
     float angleRendered = m_angle;
-    if (m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
+    if (!m_isFrozen && m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
       angleRendered += STEP_ANGLE;
     }
-    else if (!m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
+    else if (!m_isFrozen && !m_alternateStep && (m_move == Move::FORWARD || m_move == Move::BACKWARD)) {
       angleRendered -= STEP_ANGLE;
     }
     sprite.setRotation(angleRendered - gf::Pi2); // Pi/2 to align the hero front face

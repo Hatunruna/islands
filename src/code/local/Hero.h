@@ -7,6 +7,8 @@
 #include <gf/Texture.h>
 #include <gf/Vector.h>
 
+#include "Messages.h"
+
 namespace bi {
   class Hero: public gf::Entity {
   public:
@@ -34,6 +36,10 @@ namespace bi {
     void turnNone();
 
     void sendInitialPosition() const;
+    bool isOnIsland() const;
+    bool scanAvailable() const;
+
+    gf::MessageStatus onStartScan(gf::Id id, gf::Message *msg);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
@@ -46,6 +52,8 @@ namespace bi {
     gf::Texture &m_texture;
     float m_timeElapsed;
     bool m_alternateStep;
+    bool m_isOnIsland;
+    bool m_isFrozen;
   };
 }
 

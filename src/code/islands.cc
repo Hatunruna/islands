@@ -94,6 +94,10 @@ int main() {
   downAction.setContinuous();
   actions.addAction(downAction);
 
+  gf::Action scanAction("Scan");
+  scanAction.addScancodeKeyControl(gf::Scancode::Space);
+  actions.addAction(scanAction);
+
   // entities
   bi::Steam steam;
 //   steam.run();
@@ -143,25 +147,27 @@ int main() {
       window.toggleFullscreen();
     }
 
+    if (scanAction.isActive()) {
+      if (hero.scanAvailable()) {
+        // Send the start scan
+        bi::StartScan message;
+        bi::gMessageManager().sendMessage(&message);
+      }
+    }
+
     if (rightAction.isActive()) {
-      // gf::Log::print("RIGHT\n");
       hero.turnRight();
     } else if (leftAction.isActive()) {
-      // gf::Log::print("LEFT\n");
       hero.turnLeft();
     } else {
-      // gf::Log::print("TURN OFF");
       hero.turnNone();
     }
 
     if (upAction.isActive()) {
-      // gf::Log::print("UP\n");
       hero.moveForward();
     } else if (downAction.isActive()) {
-      // gf::Log::print("DOWN\n");
       hero.moveBackward();
     } else {
-      // gf::Log::print("STOP");
       hero.moveStop();
     }
 

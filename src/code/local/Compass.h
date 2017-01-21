@@ -3,6 +3,8 @@
 
 #include <gf/Entity.h>
 
+#include "Messages.h"
+
 namespace bi {
   class Compass: public gf::Entity {
   public:
@@ -11,8 +13,12 @@ namespace bi {
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
 
+    gf::MessageStatus onStartScan(gf::Id id, gf::Message *msg);
+
   private:
     float m_angle;
+    float m_timeElapsed;
+    bool m_displayed;
   };
 }
 
