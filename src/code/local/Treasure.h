@@ -7,12 +7,13 @@
 namespace bi {
   class Treasure: public gf::Entity {
   public:
-    Treasure(const gf::Vector2f postion, const float sizeRendered, const gf::Path texturePath);
+    Treasure(const gf::Vector2f postion, const float sizeRendered, unsigned value, const gf::Path texturePath);
 
     gf::Vector2f getPosition() const;
     void setHeroPosition(const gf::Vector2f heroPosition);
     bool isFound() const;
     void found();
+    unsigned getValue() const;
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
@@ -24,6 +25,7 @@ namespace bi {
     float m_alphaLevel;
     gf::Vector2f m_heroPosition;
     bool m_isFound;
+    unsigned m_value;
   };
 }
 

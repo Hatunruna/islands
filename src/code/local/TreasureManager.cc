@@ -25,19 +25,19 @@ namespace bi {
 
     switch (treasureType) {
     case TreasureType::BONES:
-      m_treasures.push_back(Treasure(position, 40.0f, "bones.png"));
+      m_treasures.push_back(Treasure(position, 40.0f, 0, "bones.png"));
       break;
 
     case TreasureType::NECKLACE:
-      m_treasures.push_back(Treasure(position, 40.0f, "relics_01.png"));
+      m_treasures.push_back(Treasure(position, 40.0f, 100, "relics_01.png"));
       break;
 
     case TreasureType::GOLD:
-      m_treasures.push_back(Treasure(position, 80.0f, "relics_02.png"));
+      m_treasures.push_back(Treasure(position, 80.0f, 200, "relics_02.png"));
       break;
 
     case TreasureType::CHEST:
-      m_treasures.push_back(Treasure(position, 80.0f, "chest.png"));
+      m_treasures.push_back(Treasure(position, 80.0f, 500, "chest.png"));
     }
   }
 
@@ -50,6 +50,9 @@ namespace bi {
       if (distance <= HITBOX_LIMIT * HITBOX_LIMIT) {
         treasure.found();
         // Sent event
+        GoldLooted message;
+        message.value = treasure.getValue();
+        gMessageManager().sendMessage(&message);
       }
     }
 

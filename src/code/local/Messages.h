@@ -30,6 +30,12 @@ namespace bi {
     gf::Vector2f position;
   };
 
+  struct GoldLooted: public gf::Message {
+    static constexpr gf::Id type = "GoldLooted"_id;
+
+    unsigned value;
+  };
+
 }
 
 #endif // BI_MESSAGES_H

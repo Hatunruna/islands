@@ -11,14 +11,15 @@ namespace bi {
   static constexpr float SPRITE_SIZE = 256.0f;
   static constexpr float LIMIT_VIEW = 250.0f;
 
-  Treasure::Treasure(const gf::Vector2f postion, const float sizeRendered, const gf::Path texturePath)
+  Treasure::Treasure(const gf::Vector2f postion, const float sizeRendered, unsigned value, const gf::Path texturePath)
   : gf::Entity(5)
   , m_texture(&(gResourceManager().getTexture(texturePath)))
   , m_position(postion)
   , m_SIZE_RENDERED(sizeRendered)
   , m_alphaLevel(0.0f)
   , m_heroPosition({ 0.0f, 0.0f })
-  , m_isFound(false) {
+  , m_isFound(false)
+  , m_value(value) {
     m_texture->setSmooth(true);
   }
 
@@ -36,6 +37,10 @@ namespace bi {
 
   void Treasure::found() {
     m_isFound = true;
+  }
+
+  unsigned Treasure::getValue() const {
+    return m_value;
   }
 
   void Treasure::update(float dt) {
