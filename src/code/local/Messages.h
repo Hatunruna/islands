@@ -19,6 +19,12 @@ namespace bi {
     static constexpr gf::Id type = "StartScan"_id;
   };
 
+  struct NearestTreasure: public gf::Message {
+    static constexpr gf::Id type = "NearestTreasure"_id;
+
+    gf::Vector2f position;
+  };
+
 }
 
 #endif // BI_MESSAGES_H

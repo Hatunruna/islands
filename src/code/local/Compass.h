@@ -14,6 +14,7 @@ namespace bi {
     virtual void render(gf::RenderTarget& target) override;
 
     gf::MessageStatus onStartScan(gf::Id id, gf::Message *msg);
+    gf::MessageStatus onNearestTreasure(gf::Id id, gf::Message *msg);
 
   private:
     float m_angle;

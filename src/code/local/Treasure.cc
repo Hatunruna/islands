@@ -16,6 +16,10 @@ namespace bi {
     m_texture.setSmooth(true);
   }
 
+  gf::Vector2f Treasure::getPosition() const {
+    return m_position;
+  }
+
   void Treasure::update(float dt) {
     // Nothing
   }

@@ -9,6 +9,8 @@ namespace bi {
   public:
     Treasure(const gf::Vector2f postion, const float sizeRendered, const gf::Path texturePath);
 
+    gf::Vector2f getPosition() const;
+
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
 

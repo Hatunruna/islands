@@ -17,6 +17,7 @@ namespace bi {
   , m_displayed(false) {
     // Register message
     gMessageManager().registerHandler<StartScan>(&Compass::onStartScan, this);
+    gMessageManager().registerHandler<NearestTreasure>(&Compass::onNearestTreasure, this);
   }
 
   gf::MessageStatus Compass::onStartScan(gf::Id id, gf::Message *msg) {
@@ -24,6 +25,15 @@ namespace bi {
     // auto startScan = static_cast<StartScan*>(msg);
 
     m_displayed = true;
+
+    return gf::MessageStatus::Keep;
+  }
+
+  gf::MessageStatus Compass::onNearestTreasure(gf::Id id, gf::Message *msg) {
+    assert(id == NearestTreasure::type);
+    auto nearestTreasure = static_cast<NearestTreasure*>(msg);
+
+    m_angle = gf::angle(nearestTreasure->position);
 
     return gf::MessageStatus::Keep;
   }

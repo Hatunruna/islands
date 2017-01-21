@@ -6,6 +6,7 @@
 #include <gf/Entity.h>
 #include <gf/Vector.h>
 
+#include "Messages.h"
 #include "Treasure.h"
 
 namespace bi {
@@ -19,6 +20,12 @@ namespace bi {
     virtual void render(gf::RenderTarget& target) override;
 
   private:
+    gf::Vector2f getNearestTreasure() const;
+
+    gf::MessageStatus onHeroPosition(gf::Id id, gf::Message *msg);
+    gf::MessageStatus onStartScan(gf::Id id, gf::Message *msg);
+
+  private:
     enum class TreasureType: unsigned {
       BONES,
       NECKLACE,
@@ -28,6 +35,7 @@ namespace bi {
 
   private:
     std::vector<Treasure> m_treasures;
+    gf::Vector2f m_heroPosition;
   };
 }
 
