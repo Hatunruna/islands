@@ -10,6 +10,8 @@
 namespace bi {
   static constexpr float ANGULAR_VELOCITY = 1.0f;
   static constexpr float VELOCITY = 100.0f;
+  static constexpr float SPRITE_SIZE = 256.0f;
+  static constexpr float HERO_SIZE = 96.0f;
 
   Hero::Hero(const gf::Vector2f postion)
   : gf::Entity(10)
@@ -87,10 +89,9 @@ namespace bi {
   void Hero::render(gf::RenderTarget& target) {
     gf::Sprite sprite;
     sprite.setRotation(m_angle - gf::Pi2); // Pi/2 to align the hero front face
-    // sprite.setColor(gf::Color::Red);
     sprite.setTexture(m_texture);
     sprite.setPosition(m_position);
-    sprite.setScale(100.0f / 256.0f);
+    sprite.setScale(HERO_SIZE / SPRITE_SIZE);
     sprite.setAnchor(gf::Anchor::Center);
 
     target.draw(sprite);
