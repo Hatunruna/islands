@@ -104,6 +104,7 @@ namespace bi {
     HeroPosition message;
     message.position = m_position;
     gMessageManager().sendMessage(&message);
+    m_position = message.position;
   }
 
   void Hero::render(gf::RenderTarget& target) {
