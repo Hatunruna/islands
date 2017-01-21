@@ -38,7 +38,8 @@ namespace bi {
     };
 
     std::deque<Cloud> m_clouds;
-    gf::Vector2f m_hero;
+    gf::Vector2f m_heroPosition;
+    float m_heroAngle;
     float m_timer;
     bool m_running;
   };

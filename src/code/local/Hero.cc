@@ -9,10 +9,10 @@
 #include "Singletons.h"
 
 namespace bi {
-  static constexpr float HERO_ANGULAR_VELOCITY = 1.0f;
+  static constexpr float HERO_ANGULAR_VELOCITY = 1.5f;
   static constexpr float HERO_VELOCITY = 100.0f;
 
-  static constexpr float BOAT_ANGULAR_VELOCITY = 0.3f;
+  static constexpr float BOAT_ANGULAR_VELOCITY = 0.5f;
   static constexpr float BOAT_VELOCITY = 200.0f;
 
   static constexpr float SPRITE_SIZE = 256.0f;
@@ -22,8 +22,9 @@ namespace bi {
   static constexpr float STEP_TIME = 0.25f;
   static constexpr float STEP_ANGLE = 10.0f * gf::Pi / 180.0f; // rad
 
-  Hero::Hero(const gf::Vector2f postion)
+  Hero::Hero(Steam& steam, const gf::Vector2f postion)
   : gf::Entity(10)
+  , m_steam(steam)
   , m_turn(Turn::NONE)
   , m_move(Move::NONE)
   , m_position(postion)
@@ -147,9 +148,16 @@ namespace bi {
       m_position += gf::unit(m_angle) * distance;
     }
 
+    if (!m_isOnIsland) {
+      m_steam.run();
+    } else {
+      m_steam.stop();
+    }
+
     // Send the position message
     HeroPosition message;
     message.position = m_position;
+    message.angle = m_angle;
     gMessageManager().sendMessage(&message);
 
     m_isOnIsland = message.isOnIsland;
