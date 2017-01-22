@@ -12,14 +12,15 @@
 #include <gf/Window.h>
 
 #include "config.h"
-#include "ResourceManager.h"
 #include "local/Compass.h"
 #include "local/Gold.h"
 #include "local/DecorationManager.h"
 #include "local/Hero.h"
 #include "local/Messages.h"
+#include "local/ResourceManager.h"
 #include "local/Sea.h"
 #include "local/Singletons.h"
+#include "local/SoundManager.h"
 #include "local/Steam.h"
 #include "local/TreasureManager.h"
 #include "local/TurretManager.h"
@@ -37,7 +38,7 @@ int main() {
   gf::RenderWindow renderer(window);
 
   gf::SingletonStorage<gf::MessageManager> storageForMessageManager(bi::gMessageManager);
-  gf::SingletonStorage<gf::ResourceManager> storageForResourceManager(bi::gResourceManager);
+  gf::SingletonStorage<bi::ResourceManager> storageForResourceManager(bi::gResourceManager);
   gf::SingletonStorage<gf::Random> storageForRandom(bi::gRandom);
   gf::SingletonStorage<gf::WindowGeometryTracker> storageForWindowGeometryTracker(bi::gWinGeometry);
 
@@ -126,6 +127,8 @@ int main() {
   bi::Gold gold;
 
   bi::WaveManager waves;
+
+  bi::SoundManager sounds;
 
   // turrets.addTurret({ 4500.0f, 4000.0f });
 

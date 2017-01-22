@@ -7,9 +7,11 @@
 #include <gf/ResourceManager.h>
 #include <gf/WindowGeometryTracker.h>
 
+#include "ResourceManager.h"
+
 namespace bi {
   extern gf::Singleton<gf::MessageManager> gMessageManager;
-  extern gf::Singleton<gf::ResourceManager> gResourceManager;
+  extern gf::Singleton<ResourceManager> gResourceManager;
   extern gf::Singleton<gf::Random> gRandom;
   extern gf::Singleton<gf::WindowGeometryTracker> gWinGeometry;
 }
