@@ -63,7 +63,7 @@ namespace bi {
       // Compute the font size 10% of height of screen
       float fontSize = 10 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
 
-      gf::Text text(std::to_string(m_score), m_font, fontSize);
+      gf::Text text(std::to_string(m_score) + "/5000", m_font, fontSize);
       text.setColor(gf::Color::White);
       text.setOutlineColor(gf::Color::Black);
       text.setAnchor(gf::Anchor::TopRight);

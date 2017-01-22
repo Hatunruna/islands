@@ -35,6 +35,7 @@ int main() {
   gf::Log::setLevel(gf::Log::Level::Debug);
 
   gf::Window window("Bygone Islands", ScreenSize);
+  window.setFullscreen(true);
   gf::RenderWindow renderer(window);
 
   gf::SingletonStorage<gf::MessageManager> storageForMessageManager(bi::gMessageManager);
