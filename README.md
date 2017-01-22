@@ -4,6 +4,7 @@ Bygone Islands ...
 
 ## Required libraries
 - GF (https://github.com/GamedevFramework/gf)
+- SFML Audio
 
 ## Build & run
 ```
