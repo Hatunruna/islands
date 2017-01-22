@@ -64,6 +64,7 @@ int main() {
   window.setSize({600, 600});
   gf::ScreenView splash;
   renderer.setView(splash);
+  logo.setScale(1.5f);
   logo.setAnchor(gf::Anchor::Center);
   renderer.clear();
   renderer.draw(logo);
