@@ -14,7 +14,7 @@ namespace bi {
   static constexpr float RADUIS_TARGET_TURRET = 350.0f;
   static constexpr float RADUIS_HIT = 30.0f;
   static constexpr float COOLDOWN_FIRE = 1.0f;
-  static constexpr float BULLET_SPEED = 7500.0f;
+  static constexpr float SHOOT_VELOCITY = 400.0f;
 
   TurretManager::TurretManager()
   : m_turretTexture(gResourceManager().getTexture("turret.png")) {
@@ -55,8 +55,10 @@ namespace bi {
           // Create the bullet
           Turret::Bullet bullet;
           bullet.position = turret.position;
-          // bullet.velocity = m_heroPosition - turret.position;
-          bullet.velocity = BULLET_SPEED * (m_heroPosition - turret.position) / (m_heroPosition + turret.position);
+          gf::Vector2f velocity = m_heroPosition - turret.position;
+          float norm = std::hypot(velocity.x, velocity.y);
+          velocity = (velocity / norm) * SHOOT_VELOCITY;
+          bullet.velocity = velocity;
           bullet.active = true;
           bullet.timeElapsed = 0.0f;
 
@@ -75,29 +77,6 @@ namespace bi {
 
       turret.bullets.erase(trash, turret.bullets.end());
     }
-    // for (auto &treasure: m_treasures) {
-    //   treasure.setHeroPosition(m_heroPosition);
-    //   treasure.update(dt);
-
-    //   float distance = gf::squareDistance(m_heroPosition, treasure.getPosition());
-    //   if (distance <= HITBOX_LIMIT * HITBOX_LIMIT) {
-    //     treasure.found();
-    //     // Sent event
-    //     GoldLooted message;
-    //     message.value = treasure.getValue();
-    //     gMessageManager().sendMessage(&message);
-    //   }
-    // }
-
-    // auto trash = std::partition(m_treasures.begin(), m_treasures.end(), [](Treasure treasure) {
-    //   return !(treasure.isFound());
-    // });
-
-    // for (auto it = trash; it != m_treasures.end(); ++it) {
-    //   assert(it->isFound());
-    // }
-
-    // m_treasures.erase(trash, m_treasures.end());
   }
 
   void TurretManager::render(gf::RenderTarget& target) {
