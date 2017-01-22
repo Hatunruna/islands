@@ -1,6 +1,8 @@
 #ifndef BI_COMPASS_H
 #define BI_COMPASS_H
 
+#include <deque>
+
 #include <gf/Entity.h>
 #include <gf/Texture.h>
 
@@ -27,7 +29,17 @@ namespace bi {
     bool m_displayed;
     gf::Texture &m_compassTexture;
     gf::Texture &m_pointerTexture;
+
+    float m_timeUntilNextRadar;
+
+    struct Radar {
+      float radius;
+      float lifetime;
+    };
+
+    std::deque<Radar> m_radars;
   };
+
 }
 
 #endif // BI_COMPASS_H
