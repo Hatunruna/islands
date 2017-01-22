@@ -216,19 +216,26 @@ int main() {
     // 2. update
 
     float dt = clock.restart().asSeconds();
-    mainEntities.update(dt);
-    hudEntities.update(dt);
+    if (!gold.isGameOver()) {
+      mainEntities.update(dt);
+      hudEntities.update(dt);
+    }
 
 
     // 3. draw
 
     renderer.clear();
 
-    renderer.setView(mainView);
-    mainEntities.render(renderer);
+    if (gold.isGameOver()) {
+      renderer.setView(hudView);
+      gold.render(renderer);
+    } else {
+      renderer.setView(mainView);
+      mainEntities.render(renderer);
 
-    renderer.setView(hudView);
-    hudEntities.render(renderer);
+      renderer.setView(hudView);
+      hudEntities.render(renderer);
+    }
 
     renderer.display();
 

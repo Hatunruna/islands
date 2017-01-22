@@ -36,6 +36,10 @@ namespace bi {
     unsigned value;
   };
 
+  struct GameOver: public gf::Message {
+    static constexpr gf::Id type = "GameOver"_id;    
+  };
+
 }
 
 #endif // BI_MESSAGES_H
