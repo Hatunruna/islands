@@ -121,7 +121,7 @@ namespace bi {
       }
 
       // Manage the step "animation"
-      if (m_timeElapsed > STEP_TIME) {
+      while (m_timeElapsed > STEP_TIME) {
         m_timeElapsed -= STEP_TIME;
         m_alternateStep = !m_alternateStep;
       }
