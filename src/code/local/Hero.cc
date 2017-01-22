@@ -159,6 +159,7 @@ namespace bi {
         break;
 
       case Move::NONE:
+        m_pathSound.stop();
         // Nothing
         break;
       }
