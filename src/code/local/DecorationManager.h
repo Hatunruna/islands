@@ -25,6 +25,7 @@ namespace bi {
             ROCKS2,
             PALMTREE1,
             PALMTREE2,
+            PALMTREE3,
             CAMPFIRE
         };
 
