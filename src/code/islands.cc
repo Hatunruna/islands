@@ -7,6 +7,8 @@
 #include <gf/Log.h>
 #include <gf/Random.h>
 #include <gf/RenderWindow.h>
+#include <gf/Sprite.h>
+#include <gf/VectorOps.h>
 #include <gf/ViewContainer.h>
 #include <gf/Views.h>
 #include <gf/Window.h>
@@ -35,7 +37,7 @@ int main() {
   gf::Log::setLevel(gf::Log::Level::Debug);
 
   gf::Window window("Bygone Islands", ScreenSize);
-  window.setFullscreen(true);
+  // window.setFullscreen(true);
   gf::RenderWindow renderer(window);
 
   gf::SingletonStorage<gf::MessageManager> storageForMessageManager(bi::gMessageManager);
@@ -56,6 +58,16 @@ int main() {
 
   gf::ScreenView hudView;
   views.addView(hudView);
+
+  gf::Sprite logo;
+  logo.setTexture(bi::gResourceManager().getTexture("TeamLogo.png"));
+  window.setSize({600, 600});
+  gf::ScreenView splash;
+  renderer.setView(splash);
+  logo.setAnchor(gf::Anchor::Center);
+  renderer.clear();
+  renderer.draw(logo);
+  renderer.display();
 
   views.setInitialScreenSize(ScreenSize);
   bi::gWinGeometry().setInitialScreenSize(ScreenSize);
@@ -152,6 +164,8 @@ int main() {
   renderer.clear(gf::Color::Black);
 
   gf::Clock clock;
+
+  window.setFullscreen(true);
 
   while (window.isOpen()) {
     // 1. input
