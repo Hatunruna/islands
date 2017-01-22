@@ -12,6 +12,7 @@
 #include <gf/Window.h>
 
 #include "config.h"
+#include "ResourceManager.h"
 #include "local/Compass.h"
 #include "local/Gold.h"
 #include "local/DecorationManager.h"
