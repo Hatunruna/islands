@@ -36,8 +36,8 @@ namespace bi {
     gMessageManager().registerHandler<HeroPosition>(&WaveManager::onHeroPosition, this);
 
     // For tests
-    m_p0 = { 4000.0f - WaveWidth / 2, 3500.0f };
-    m_p1 = { 4000.0f + WaveWidth / 2, 3500.0f };
+    m_p0 = { 6000.0f - WaveWidth / 2, 5500.0f };
+    m_p1 = { 6000.0f + WaveWidth / 2, 5500.0f };
 
     m_waveSound.setLoop(true);
     m_waveSound.setVolume(0.0f);
