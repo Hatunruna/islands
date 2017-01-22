@@ -117,16 +117,17 @@ int main() {
   bi::DecorationManager decorationsAbove(15);
   bi::DecorationManager decorationsBelow(5);
 
+  bi::TurretManager turrets;
+
   bi::Sea sea;
-  sea.generate(treasures, decorationsAbove, decorationsBelow);
+  sea.generate(treasures, decorationsAbove, decorationsBelow, turrets);
 
   bi::Compass compass;
   bi::Gold gold;
 
   bi::WaveManager waves;
 
-  bi::TurretManager turrets;
-  turrets.addTurret({ 4500.0f, 4000.0f });
+  // turrets.addTurret({ 4500.0f, 4000.0f });
 
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);

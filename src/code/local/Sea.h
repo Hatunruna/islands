@@ -9,6 +9,7 @@
 
 #include "DecorationManager.h"
 #include "TreasureManager.h"
+#include "TurretManager.h"
 
 namespace bi {
 
@@ -22,7 +23,7 @@ namespace bi {
 
     Sea();
 
-    void generate(TreasureManager& treasures, DecorationManager& decorationsAbove, DecorationManager& decorationsBelow);
+    void generate(TreasureManager& treasures, DecorationManager& decorationsAbove, DecorationManager& decorationsBelow, TurretManager &turrets);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
