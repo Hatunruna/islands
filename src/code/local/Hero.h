@@ -10,6 +10,8 @@
 #include "Messages.h"
 #include "Steam.h"
 
+#include <SFML/Audio.hpp>
+
 namespace bi {
   class Hero: public gf::Entity {
   public:
@@ -42,6 +44,7 @@ namespace bi {
 
     gf::MessageStatus onStartScan(gf::Id id, gf::Message *msg);
     gf::MessageStatus onStopScan(gf::Id id, gf::Message *msg);
+    gf::MessageStatus onGameOver(gf::Id id, gf::Message *msg);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
@@ -61,6 +64,11 @@ namespace bi {
     bool m_alternateStep;
     bool m_isOnIsland;
     bool m_isFrozen;
+
+    sf::Sound m_boatSound;
+    sf::Sound m_pathSound;
+
+    bool m_isGameOver;
   };
 }
 

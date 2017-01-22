@@ -7,6 +7,7 @@
 #include <gf/Log.h>
 
 #include "Confetti.h"
+#include "Messages.h"
 #include "Sea.h"
 #include "Singletons.h"
 
@@ -15,6 +16,7 @@ namespace bi {
   static constexpr float WaveLifetime = 30.0f;
   static constexpr float WaveWidth = 1000.0f;
   static constexpr float WaveVelocity = 90.0f;
+  static constexpr float WaveDeathDistance = 100.0f;
 
   static constexpr float BubblePerSecond = 2000.0f;
   static constexpr float BubbleAngle = 3 * gf::Pi / 2;
@@ -28,6 +30,7 @@ namespace bi {
   : gf::Entity(15)
   , m_elapsed(0)
   {
+    gMessageManager().registerHandler<HeroPosition>(&WaveManager::onHeroPosition, this);
 
     // For tests
     m_p0 = { 4000.0f - WaveWidth / 2, 3500.0f };
@@ -44,26 +47,11 @@ namespace bi {
     if (m_elapsed > WaveLifetime) {
       m_elapsed = 0;
 
-//       unsigned col, row;
+      m_p0.x = gRandom().computeUniformFloat(Sea::WorldMin, Sea::WorldMax);
+      m_p0.y = gRandom().computeUniformFloat(Sea::WorldMin, Sea::WorldMax);
 
-//       do {
-        m_p0.x = gRandom().computeUniformFloat(Sea::WorldMin, Sea::WorldMax);
-        m_p0.y = gRandom().computeUniformFloat(Sea::WorldMin, Sea::WorldMax);
-
-//         col = static_cast<unsigned>(m_p0.x / Sea::TileSize);
-//         row = static_cast<unsigned>(m_p0.y / Sea::TileSize);
-//       } while (m_sea({ row, col }).elevation > 0.4f);
-
-//       do {
-        float angle = gRandom().computeUniformFloat(0.0f, 2 * gf::Pi);
-        m_p1 = m_p0 + gf::unit(angle) * WaveWidth;
-
-//         col = static_cast<unsigned>(m_p1.x / Sea::TileSize);
-//         row = static_cast<unsigned>(m_p1.y / Sea::TileSize);
-//       } while (m_sea({ row, col }).elevation > 0.4f);
-
-//       m_p0 = { 4000.0f - WaveWidth / 2, 3500.0f };
-//       m_p1 = { 4000.0f + WaveWidth / 2, 3500.0f };
+      float angle = gRandom().computeUniformFloat(0.0f, 2 * gf::Pi);
+      m_p1 = m_p0 + gf::unit(angle) * WaveWidth;
 
       // go towards center of the map
 
@@ -99,6 +87,31 @@ namespace bi {
 
       m_bubbles.push_back(bubble);
     }
+
+    // check if the hero is under the wave
+
+    float distanceFromWave = gf::dot(-normal, (m_hero - m_p0));
+
+    if (distanceFromWave <= 0 || distanceFromWave >  WaveDeathDistance) {
+      return;
+    }
+
+    // http://geomalgorithms.com/a02-_lines.html#Distance-to-Ray-or-Segment
+
+    float c1 = gf::dot((m_hero - m_p0), (m_p1 - m_p0));
+
+    if (c1 < 0) {
+      return;
+    }
+
+    float c2 = gf::squareDistance(m_p0, m_p1);
+
+    if (c1 > c2) {
+      return;
+    }
+
+    GameOver msg;
+    gMessageManager().sendMessage(&msg);
   }
 
   void WaveManager::render(gf::RenderTarget& target) {
@@ -112,6 +125,13 @@ namespace bi {
     }
 
     target.draw(confetti);
+  }
+
+  gf::MessageStatus WaveManager::onHeroPosition(gf::Id id, gf::Message *msg) {
+    assert(id == HeroPosition::type);
+    auto hero = static_cast<HeroPosition*>(msg);
+    m_hero = hero->position;
+    return gf::MessageStatus::Keep;
   }
 
 }

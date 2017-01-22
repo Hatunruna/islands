@@ -4,6 +4,7 @@
 #include <deque>
 
 #include <gf/Entity.h>
+#include <gf/Message.h>
 #include <gf/Vector.h>
 
 namespace bi {
@@ -14,6 +15,9 @@ namespace bi {
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
+
+  private:
+    gf::MessageStatus onHeroPosition(gf::Id id, gf::Message *msg);
 
   private:
     struct Bubble {
@@ -29,6 +33,8 @@ namespace bi {
     gf::Vector2f m_p1;
 
     float m_elapsed;
+
+    gf::Vector2f m_hero;
   };
 
 }

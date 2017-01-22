@@ -39,7 +39,6 @@ namespace bi {
         if (distance <= RADUIS_HIT * RADUIS_HIT) {
           // Set hit message here
           bullet.active = false;
-          gf::Log::print("hit\n");
           bi::GameOver message;
           gMessageManager().sendMessage(&message);
         }
