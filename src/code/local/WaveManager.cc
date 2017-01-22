@@ -91,7 +91,6 @@ namespace bi {
     // check if the hero is under the wave
 
     float distanceFromWave = gf::dot(-normal, (m_hero - m_p0));
-    gf::Log::print("distanceFromWave: %f\n", distanceFromWave);
 
     if (distanceFromWave <= 0 || distanceFromWave >  WaveDeathDistance) {
       return;
@@ -100,7 +99,6 @@ namespace bi {
     // http://geomalgorithms.com/a02-_lines.html#Distance-to-Ray-or-Segment
 
     float c1 = gf::dot((m_hero - m_p0), (m_p1 - m_p0));
-    gf::Log::print("c1: %f\n", c1);
 
     if (c1 < 0) {
       return;
@@ -112,8 +110,8 @@ namespace bi {
       return;
     }
 
-    // TODO: dead
-
+    GameOver msg;
+    gMessageManager().sendMessage(&msg);
   }
 
   void WaveManager::render(gf::RenderTarget& target) {
