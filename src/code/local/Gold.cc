@@ -2,15 +2,20 @@
 
 #include <gf/Log.h>
 #include <gf/RenderTarget.h>
+#include <gf/Sprite.h>
 #include <gf/Text.h>
 
 #include "Singletons.h"
 
 namespace bi {
+  static constexpr float SPRITE_SIZE = 256.0f;
+  static constexpr float SIZE_RENDERED = 30.0f;
+
   Gold::Gold()
   : gf::Entity(10)
   , m_score(0)
-  , m_font(gResourceManager().getFont("rm_albion.ttf")) {
+  , m_font(gResourceManager().getFont("rm_albion.ttf"))
+  , m_coinsTexture(gResourceManager().getTexture("coin.png")) {
     // Event
     gMessageManager().registerHandler<GoldLooted>(&Gold::onGoldLooted, this);
   }
@@ -28,13 +33,24 @@ namespace bi {
     // Compute the font size 10% of height of screen
     float fontSize = 10 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
 
-    gf::Text text("Gold: " + std::to_string(m_score), m_font, fontSize);
+    gf::Text text(std::to_string(m_score), m_font, fontSize);
     text.setColor(gf::Color::White);
     text.setOutlineColor(gf::Color::Black);
     text.setAnchor(gf::Anchor::TopRight);
     text.setPosition(margin);
 
     target.draw(text);
+
+    // Draw the coins
+    margin.x -= text.getLocalBounds().width + gWinGeometry().getXRatio(0.01f, 0.0f);
+    margin.y -= text.getLocalBounds().height;
+    gf::Sprite sprite;
+    sprite.setTexture(m_coinsTexture);
+    sprite.setPosition(margin);
+    sprite.setScale(fontSize / SPRITE_SIZE);
+    sprite.setAnchor(gf::Anchor::TopRight);
+
+    target.draw(sprite);
   }
 
   gf::MessageStatus Gold::onGoldLooted(gf::Id id, gf::Message *msg) {

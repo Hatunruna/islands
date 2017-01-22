@@ -3,6 +3,7 @@
 
 #include <gf/Entity.h>
 #include <gf/Font.h>
+#include <gf/Texture.h>
 
 #include "Messages.h"
 
@@ -20,6 +21,7 @@ namespace bi {
   private:
     unsigned m_score;
     gf::Font &m_font;
+    gf::Texture &m_coinsTexture;
   };
 }
 
