@@ -14,6 +14,7 @@ namespace bi {
   static constexpr float RADUIS_TARGET_TURRET = 350.0f;
   static constexpr float RADUIS_HIT = 30.0f;
   static constexpr float COOLDOWN_FIRE = 1.0f;
+  static constexpr float BULLET_SPEED = 7500.0f;
 
   TurretManager::TurretManager()
   : m_turretTexture(gResourceManager().getTexture("turret.png")) {
@@ -54,7 +55,8 @@ namespace bi {
           // Create the bullet
           Turret::Bullet bullet;
           bullet.position = turret.position;
-          bullet.velocity = m_heroPosition - turret.position;
+          // bullet.velocity = m_heroPosition - turret.position;
+          bullet.velocity = BULLET_SPEED * (m_heroPosition - turret.position) / (m_heroPosition + turret.position);
           bullet.active = true;
           bullet.timeElapsed = 0.0f;
 
