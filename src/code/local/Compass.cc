@@ -7,8 +7,6 @@
 #include <gf/Sprite.h>
 #include <gf/VectorOps.h>
 
-#include <gf/Log.h>
-
 #include "Singletons.h"
 
 namespace bi {
@@ -115,8 +113,6 @@ namespace bi {
 
         m_radars.push_back(radar);
       }
-
-      gf::Log::print("Radars: %zu\n", m_radars.size());
 
       for (auto& radar : m_radars) {
         radar.radius += RADAR_RADIUS_INCREASE * dt;

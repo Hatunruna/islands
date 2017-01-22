@@ -1,7 +1,6 @@
 #include "Sea.h"
 
 #include <gf/ColorRamp.h>
-#include <gf/Log.h>
 #include <gf/Noises.h>
 #include <gf/RenderTarget.h>
 #include <gf/VectorOps.h>

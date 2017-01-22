@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include <gf/Log.h>
 #include <gf/VectorOps.h>
 
 #include "Singletons.h"

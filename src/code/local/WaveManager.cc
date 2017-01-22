@@ -4,8 +4,6 @@
 #include <gf/RenderTarget.h>
 #include <gf/Shapes.h>
 
-#include <gf/Log.h>
-
 #include "Confetti.h"
 #include "Messages.h"
 #include "Sea.h"

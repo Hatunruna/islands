@@ -1,6 +1,5 @@
 #include "TurretManager.h"
 
-#include <gf/Log.h>
 #include <gf/RenderTarget.h>
 #include <gf/Shapes.h>
 #include <gf/Sprite.h>

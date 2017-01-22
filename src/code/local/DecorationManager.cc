@@ -1,6 +1,5 @@
 #include "DecorationManager.h"
 
-#include <gf/Log.h>
 #include <gf/VectorOps.h>
 
 #include "Singletons.h"
