@@ -15,6 +15,7 @@ namespace bi {
   : gf::Entity(10)
   , m_score(0)
   , m_gameOver(false)
+  , m_win(false)
   , m_font(gResourceManager().getFont("rm_albion.ttf"))
   , m_coinsTexture(gResourceManager().getTexture("coin.png")) {
     // Event
@@ -27,22 +28,32 @@ namespace bi {
   }
 
   void Gold::render(gf::RenderTarget& target) {
-    if (m_gameOver) {
+    if (m_gameOver || m_win) {
       // Compute the margin 50% of screen
       gf::Vector2f margin;
       margin.x = gWinGeometry().getXRatio(0.5f, 0.0f);
       margin.y = gWinGeometry().getYRatio(0.5f, 0.0f);
 
       // Compute the font size 10% of height of screen
-      float fontSize = 25 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
+      float fontSize = 150.0f;
 
-      gf::Text text("Game Over!\nYour score is : " + std::to_string(m_score), m_font, fontSize);
-      text.setColor(gf::Color::White);
-      text.setOutlineColor(gf::Color::Black);
-      text.setAnchor(gf::Anchor::Center);
-      text.setPosition(margin);
+      if (m_win) {
+        gf::Text text("You win!\nYour score is : " + std::to_string(m_score), m_font, fontSize);
+        text.setColor(gf::Color::White);
+        text.setOutlineColor(gf::Color::Black);
+        text.setAnchor(gf::Anchor::Center);
+        text.setPosition(margin);
 
-      target.draw(text);
+        target.draw(text);
+      } else {
+        gf::Text text("Game Over!\nYour score is : " + std::to_string(m_score), m_font, fontSize);
+        text.setColor(gf::Color::White);
+        text.setOutlineColor(gf::Color::Black);
+        text.setAnchor(gf::Anchor::Center);
+        text.setPosition(margin);
+
+        target.draw(text);
+      }
     } else {
       // Compute the margin 5% of screen
       gf::Vector2f margin;
@@ -78,6 +89,9 @@ namespace bi {
     auto gold = static_cast<GoldLooted*>(msg);
 
     m_score += gold->value;
+    if (m_score > 5000) {
+      m_win = true;
+    }
 
     return gf::MessageStatus::Keep;
   }

@@ -226,7 +226,7 @@ int main() {
 
     renderer.clear();
 
-    if (gold.isGameOver()) {
+    if (gold.isGameOver() || gold.isWin()) {
       renderer.setView(hudView);
       gold.render(renderer);
     } else {

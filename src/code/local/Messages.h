@@ -37,7 +37,7 @@ namespace bi {
   };
 
   struct GameOver: public gf::Message {
-    static constexpr gf::Id type = "GameOver"_id;    
+    static constexpr gf::Id type = "GameOver"_id;
   };
 
 }
