@@ -14,6 +14,7 @@
 #include "config.h"
 #include "local/Compass.h"
 #include "local/Gold.h"
+#include "local/DecorationManager.h"
 #include "local/Hero.h"
 #include "local/Messages.h"
 #include "local/Sea.h"
@@ -112,8 +113,11 @@ int main() {
 
   bi::TreasureManager treasures;
 
+  bi::DecorationManager decorationsAbove(15);
+  bi::DecorationManager decorationsBelow(5);
+
   bi::Sea sea;
-  sea.generate(treasures);
+  sea.generate(treasures, decorationsAbove, decorationsBelow);
 
   bi::Compass compass;
   bi::Gold gold;
@@ -127,6 +131,8 @@ int main() {
   mainEntities.addEntity(hero);
   mainEntities.addEntity(sea);
   mainEntities.addEntity(treasures);
+  mainEntities.addEntity(decorationsAbove);
+  mainEntities.addEntity(decorationsBelow);
   mainEntities.addEntity(steam);
   mainEntities.addEntity(waves);
   mainEntities.addEntity(turrets);

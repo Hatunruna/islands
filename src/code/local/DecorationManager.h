@@ -10,9 +10,9 @@
 #include "Decoration.h"
 
 namespace bi {
-    class DecorationManage: public gf::Entity {
+    class DecorationManager: public gf::Entity {
     public:
-        DecorationManage();
+        DecorationManager(int priority);
         
         void addDecoration(const gf::Vector2f position);
         

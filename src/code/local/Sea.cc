@@ -13,6 +13,7 @@ namespace bi {
   static constexpr double Scale = 6.0;
   static constexpr double SeaLevel = 0.65;
 
+  static constexpr unsigned DecorationCount = 200;
   static constexpr unsigned DisplayHalfRange = 100;
   static constexpr unsigned TreasureCount = 30;
 
@@ -32,7 +33,7 @@ namespace bi {
     return (value - waterLevel) / (1.0 - waterLevel) * 0.5 + 0.5;
   }
 
-  void Sea::generate(TreasureManager& treasures) {
+  void Sea::generate(TreasureManager& treasures, DecorationManager& decorationsAbove, DecorationManager& decorationsBelow) {
     // generate the elevation
 
     gf::SimplexNoise2D simplex(gRandom());
@@ -82,6 +83,37 @@ namespace bi {
       treasures.addTreasure(position);
     }
 
+    // decorations
+    
+    for (unsigned i = 0; i < DecorationCount / 2; ++i) {
+      gf::Vector2f position;
+      unsigned col, row;
+
+      do {
+        position.x = gRandom().computeUniformFloat(WorldMin, WorldMax);
+        position.y = gRandom().computeUniformFloat(WorldMin, WorldMax);
+
+        col = static_cast<unsigned>(position.x / TileSize);
+        row = static_cast<unsigned>(position.y / TileSize);
+      } while (m_sea({ row, col }).elevation < 0.52f);
+
+      decorationsAbove.addDecoration(position);
+    }
+
+    for (unsigned i = 0; i < DecorationCount / 2; ++i) {
+      gf::Vector2f position;
+      unsigned col, row;
+
+      do {
+        position.x = gRandom().computeUniformFloat(WorldMin, WorldMax);
+        position.y = gRandom().computeUniformFloat(WorldMin, WorldMax);
+
+        col = static_cast<unsigned>(position.x / TileSize);
+        row = static_cast<unsigned>(position.y / TileSize);
+      } while (m_sea({ row, col }).elevation < 0.52f);
+
+      decorationsBelow.addDecoration(position);
+    }
 
     // compute colors
 
