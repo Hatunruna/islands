@@ -7,7 +7,7 @@
 namespace bi {
   class Decoration: public gf::Entity {
   public:
-    Decoration(const gf::Vector2f postion, const float sizeRendered, const gf::Path texturePath);
+    Decoration(const gf::Vector2f postion, const float sizeRendered, float rotate, const gf::Path texturePath);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
@@ -16,6 +16,7 @@ namespace bi {
     gf::Texture *m_texture;
     gf::Vector2f m_position;
     float m_SIZE_RENDERED;
+    float m_rotation;
   };
 }
 

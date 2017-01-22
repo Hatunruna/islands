@@ -14,19 +14,20 @@ namespace bi {
     // Choose a random treasure
     static constexpr unsigned NUMBER_DECORATION = 5;
     DecorationType decorationType = static_cast<DecorationType>(gRandom().computeUniformInteger<unsigned>(0, NUMBER_DECORATION-1));
+    float angle = gRandom().computeUniformFloat<float>(0, gf::Pi * 2);
 
     if(getPriority() > 10) {
       // ABOVE HERO
       switch (decorationType) {
       case DecorationType::ROCKS1:
       case DecorationType::PALMTREE1:
-        m_decorations.push_back(Decoration(position, 160.0f, "palm_tree01.png"));
+        m_decorations.push_back(Decoration(position, 160.0f, angle, "palm_tree01.png"));
         break;
 
       case DecorationType::ROCKS2:
       case DecorationType::CAMPFIRE:
       case DecorationType::PALMTREE2:
-        m_decorations.push_back(Decoration(position, 160.0f, "palm_tree02.png"));
+        m_decorations.push_back(Decoration(position, 160.0f, angle, "palm_tree02.png"));
         break;
       }
     } else {
@@ -34,16 +35,16 @@ namespace bi {
       switch (decorationType) {
       case DecorationType::ROCKS1:
       case DecorationType::PALMTREE1:
-        m_decorations.push_back(Decoration(position, 80.0f, "rocks_01.png"));
+        m_decorations.push_back(Decoration(position, 80.0f, angle, "rocks_01.png"));
         break;
 
       case DecorationType::ROCKS2:
       case DecorationType::PALMTREE2:
-        m_decorations.push_back(Decoration(position, 80.0f, "rocks_02.png"));
+        m_decorations.push_back(Decoration(position, 80.0f, angle, "rocks_02.png"));
         break;
 
       case DecorationType::CAMPFIRE:
-        m_decorations.push_back(Decoration(position, 80.0f, "campfire.png"));
+        m_decorations.push_back(Decoration(position, 80.0f, angle, "campfire.png"));
         break;
       }
 
