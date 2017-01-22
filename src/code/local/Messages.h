@@ -34,6 +34,7 @@ namespace bi {
     static constexpr gf::Id type = "GoldLooted"_id;
 
     unsigned value;
+    gf::Vector2f next;
   };
 
   struct GameOver: public gf::Message {

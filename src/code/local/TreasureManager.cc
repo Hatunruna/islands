@@ -42,6 +42,7 @@ namespace bi {
   }
 
   void TreasureManager::update(float dt) {
+    gf::Log::print("%d\n", m_treasures.size());
     for (auto &treasure: m_treasures) {
       treasure.setHeroPosition(m_heroPosition);
       treasure.update(dt);
@@ -53,6 +54,8 @@ namespace bi {
         GoldLooted message;
         message.value = treasure.getValue();
         gMessageManager().sendMessage(&message);
+
+        addTreasure(message.next);
       }
     }
 
