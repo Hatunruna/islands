@@ -24,7 +24,8 @@ namespace bi {
             ROCKS1,
             ROCKS2,
             PALMTREE1,
-            PALMTREE2
+            PALMTREE2,
+            CAMPFIRE
         };
 
     private:
