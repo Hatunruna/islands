@@ -14,7 +14,7 @@ namespace bi {
   static constexpr float RADUIS_TARGET_TURRET = 350.0f;
   static constexpr float RADUIS_HIT = 30.0f;
   static constexpr float COOLDOWN_FIRE = 1.0f;
-  static constexpr float SHOOT_VELOCITY = 400.0f;
+  static constexpr float BULLET_SPEED = 200.0f;
 
   TurretManager::TurretManager()
   : m_turretTexture(gResourceManager().getTexture("turret.png")) {
@@ -55,10 +55,8 @@ namespace bi {
           // Create the bullet
           Turret::Bullet bullet;
           bullet.position = turret.position;
-          gf::Vector2f velocity = m_heroPosition - turret.position;
-          float norm = std::hypot(velocity.x, velocity.y);
-          velocity = (velocity / norm) * SHOOT_VELOCITY;
-          bullet.velocity = velocity;
+          // bullet.velocity = m_heroPosition - turret.position;
+          bullet.velocity = BULLET_SPEED * gf::normalize(m_heroPosition - turret.position);
           bullet.active = true;
           bullet.timeElapsed = 0.0f;
 
@@ -93,8 +91,8 @@ namespace bi {
       // Draw the bullet
       for (auto &bullet: turret.bullets) {
         gf::CircleShape shape;
-        shape.setRadius(2.0f);
-        shape.setColor(gf::Color::Red);
+        shape.setRadius(6.0f);
+        shape.setColor(gf::Color::Black);
         shape.setPosition(bullet.position);
         shape.setAnchor(gf::Anchor::Center);
         target.draw(shape);
