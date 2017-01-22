@@ -93,8 +93,8 @@ namespace bi {
       // Draw the bullet
       for (auto &bullet: turret.bullets) {
         gf::CircleShape shape;
-        shape.setRadius(2.0f);
-        shape.setColor(gf::Color::Red);
+        shape.setRadius(6.0f);
+        shape.setColor(gf::Color::Black);
         shape.setPosition(bullet.position);
         shape.setAnchor(gf::Anchor::Center);
         target.draw(shape);
