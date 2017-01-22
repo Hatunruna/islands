@@ -36,13 +36,15 @@ namespace bi {
   , m_isOnIsland(true)
   , m_isFrozen(false)
   , m_boatSound(gResourceManager().getSound("pirate-boat.wav"))
-  , m_pathSound(gResourceManager().getSound("pirate-path.wav")) {
+  , m_pathSound(gResourceManager().getSound("pirate-path.wav"))
+  , m_isGameOver(false) {
     m_hatTexture.setSmooth(true);
     m_boatTexture.setSmooth(true);
 
     // Register message
     gMessageManager().registerHandler<StartScan>(&Hero::onStartScan, this);
     gMessageManager().registerHandler<StopScan>(&Hero::onStopScan, this);
+    gMessageManager().registerHandler<GameOver>(&Hero::onGameOver, this);
 
     m_boatSound.setLoop(true);
     m_pathSound.setLoop(true);
@@ -105,7 +107,20 @@ namespace bi {
     return gf::MessageStatus::Keep;
   }
 
+  gf::MessageStatus Hero::onGameOver(gf::Id id, gf::Message *msg) {
+    assert(id == GameOver::type);
+
+    m_boatSound.stop();
+    m_pathSound.stop();
+    m_isGameOver = true;
+
+    return gf::MessageStatus::Keep;
+  }
+
   void Hero::update(float dt) {
+    if (m_isGameOver) {
+      return;
+    }
     m_timeElapsed += dt;
 
     // If not frozen
