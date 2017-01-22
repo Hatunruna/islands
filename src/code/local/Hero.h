@@ -10,6 +10,8 @@
 #include "Messages.h"
 #include "Steam.h"
 
+#include <SFML/Audio.hpp>
+
 namespace bi {
   class Hero: public gf::Entity {
   public:
@@ -61,6 +63,9 @@ namespace bi {
     bool m_alternateStep;
     bool m_isOnIsland;
     bool m_isFrozen;
+
+    sf::Sound m_boatSound;
+    sf::Sound m_pathSound;
   };
 }
 

@@ -34,13 +34,18 @@ namespace bi {
   , m_timeElapsed(0.0f)
   , m_alternateStep(true)
   , m_isOnIsland(true)
-  , m_isFrozen(false) {
+  , m_isFrozen(false)
+  , m_boatSound(gResourceManager().getSound("pirate-boat.wav"))
+  , m_pathSound(gResourceManager().getSound("pirate-path.wav")) {
     m_hatTexture.setSmooth(true);
     m_boatTexture.setSmooth(true);
 
     // Register message
     gMessageManager().registerHandler<StartScan>(&Hero::onStartScan, this);
     gMessageManager().registerHandler<StopScan>(&Hero::onStopScan, this);
+
+    m_boatSound.setLoop(true);
+    m_pathSound.setLoop(true);
   }
 
   void Hero::moveForward() {
@@ -150,8 +155,18 @@ namespace bi {
 
     if (!m_isOnIsland) {
       m_steam.run();
+      if (m_boatSound.getStatus() != sf::SoundSource::Playing) {
+        m_boatSound.play();
+      }
+      m_pathSound.stop();
     } else {
       m_steam.stop();
+      if (m_move != Move::NONE) {
+        if (m_pathSound.getStatus() != sf::SoundSource::Playing) {
+          m_pathSound.play();
+        }
+      }
+      m_boatSound.stop();
     }
 
     // Send the position message

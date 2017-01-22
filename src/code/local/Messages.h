@@ -35,7 +35,6 @@ namespace bi {
 
     unsigned value;
   };
-
 }
 
 #endif // BI_MESSAGES_H
