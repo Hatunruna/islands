@@ -175,6 +175,7 @@ int main() {
         downAction.addGamepadButtonControl(id,gf::GamepadButton::DPadDown);
         downAction.addGamepadAxisControl(id,gf::GamepadAxis::LeftY,gf::GamepadAxisDirection::Positive);
         scanAction.addGamepadButtonControl(id,gf::GamepadButton::A);
+        closeWindowAction.addGamepadButtonControl(id,gf::GamepadButton::Start);
       }
 
       if (event.type == gf::EventType::GamepadDisconnected) {
