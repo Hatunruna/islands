@@ -53,6 +53,8 @@ namespace bi {
         GoldLooted message;
         message.value = treasure.getValue();
         gMessageManager().sendMessage(&message);
+
+        addTreasure(message.next);
       }
     }
 

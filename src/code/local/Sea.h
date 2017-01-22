@@ -30,6 +30,7 @@ namespace bi {
 
   private:
     gf::MessageStatus onHeroPosition(gf::Id id, gf::Message *msg);
+    gf::MessageStatus onGoldLooted(gf::Id id, gf::Message *msg);
 
   private:
     struct Point {

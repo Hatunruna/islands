@@ -124,7 +124,7 @@ int main() {
   bi::Steam steam;
 //   steam.run();
 
-  bi::Hero hero(steam, { 4000.0f, 4000.0f });
+  bi::Hero hero(steam, gf::Vector2f(bi::Sea::Size * bi::Sea::TileSize / 2));
 
   bi::TreasureManager treasures;
 
@@ -189,6 +189,7 @@ int main() {
         downAction.addGamepadButtonControl(id,gf::GamepadButton::DPadDown);
         downAction.addGamepadAxisControl(id,gf::GamepadAxis::LeftY,gf::GamepadAxisDirection::Positive);
         scanAction.addGamepadButtonControl(id,gf::GamepadButton::A);
+        closeWindowAction.addGamepadButtonControl(id,gf::GamepadButton::Start);
       }
 
       if (event.type == gf::EventType::GamepadDisconnected) {

@@ -295,4 +295,23 @@ namespace bi {
     return gf::MessageStatus::Keep;
   }
 
+  gf::MessageStatus Sea::onGoldLooted(gf::Id id, gf::Message *msg) {
+    assert(id == GoldLooted::type);
+    auto loot = static_cast<GoldLooted*>(msg);
+
+    gf::Vector2f next;
+    float col, row;
+    do {
+      next.x = gRandom().computeUniformFloat(WorldMin, WorldMax);
+      next.y = gRandom().computeUniformFloat(WorldMin, WorldMax);
+
+      col = static_cast<unsigned>(next.x / TileSize);
+      row = static_cast<unsigned>(next.y / TileSize);
+    } while (m_sea({ row, col }).elevation < 0.52f);
+
+    loot->next = next;
+
+    return gf::MessageStatus::Keep;
+  }
+
 }
