@@ -4,6 +4,8 @@
 #include <gf/Entity.h>
 #include <gf/Font.h>
 
+#include "Messages.h"
+
 namespace bi {
   class Gold: public gf::Entity {
   public:
@@ -11,6 +13,9 @@ namespace bi {
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;
+
+  private:
+    gf::MessageStatus onGoldLooted(gf::Id id, gf::Message *msg);
 
   private:
     unsigned m_score;

@@ -20,6 +20,8 @@ add_executable(islands
   code/islands.cc
   code/local/Compass.cc
   code/local/Confetti.cc
+  code/local/Decoration.cc
+  code/local/DecorationManager.cc
   code/local/Gold.cc
   code/local/Hero.cc
   code/local/Sea.cc
@@ -27,6 +29,7 @@ add_executable(islands
   code/local/Steam.cc
   code/local/Treasure.cc
   code/local/TreasureManager.cc
+  code/local/TurretManager.cc
   code/local/WaveManager.cc
 )
 

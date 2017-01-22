@@ -7,6 +7,7 @@
 #include <gf/Random.h>
 #include <gf/VertexArray.h>
 
+#include "DecorationManager.h"
 #include "TreasureManager.h"
 
 namespace bi {
@@ -21,7 +22,7 @@ namespace bi {
 
     Sea();
 
-    void generate(TreasureManager& treasures);
+    void generate(TreasureManager& treasures, DecorationManager& decorationsAbove, DecorationManager& decorationsBelow);
 
     virtual void update(float dt) override;
     virtual void render(gf::RenderTarget& target) override;

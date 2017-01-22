@@ -94,8 +94,9 @@ namespace bi {
 
       // Draw the background
       gf::Sprite compass;
+      float displaySize = 15 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
       compass.setTexture(m_compassTexture);
-      compass.setScale(COMPASS_SIZE / SPRITE_SIZE);
+      compass.setScale(displaySize / SPRITE_SIZE);
       compass.setPosition(center);
       compass.setAnchor(gf::Anchor::Center);
       target.draw(compass);
@@ -103,7 +104,7 @@ namespace bi {
       // Draw the pointer
       gf::Sprite pointer;
       pointer.setTexture(m_pointerTexture);
-      pointer.setScale(POINTER_SIZE / SPRITE_SIZE);
+      pointer.setScale(displaySize / SPRITE_SIZE);
       pointer.setPosition(center);
       pointer.setRotation(m_currentAngleTarget);
       pointer.setAnchor(gf::Anchor::Center);

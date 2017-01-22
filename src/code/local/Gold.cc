@@ -11,11 +11,12 @@ namespace bi {
   : gf::Entity(10)
   , m_score(0)
   , m_font(gResourceManager().getFont("rm_albion.ttf")) {
-    // Event ?
+    // Event
+    gMessageManager().registerHandler<GoldLooted>(&Gold::onGoldLooted, this);
   }
 
   void Gold::update(float dt) {
-
+    // Nothing
   }
 
   void Gold::render(gf::RenderTarget& target) {
@@ -34,5 +35,14 @@ namespace bi {
     text.setPosition(margin);
 
     target.draw(text);
+  }
+
+  gf::MessageStatus Gold::onGoldLooted(gf::Id id, gf::Message *msg) {
+    assert(id == GoldLooted::type);
+    auto gold = static_cast<GoldLooted*>(msg);
+
+    m_score += gold->value;
+
+    return gf::MessageStatus::Keep;
   }
 }

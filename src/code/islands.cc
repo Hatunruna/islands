@@ -14,12 +14,14 @@
 #include "config.h"
 #include "local/Compass.h"
 #include "local/Gold.h"
+#include "local/DecorationManager.h"
 #include "local/Hero.h"
 #include "local/Messages.h"
 #include "local/Sea.h"
 #include "local/Singletons.h"
 #include "local/Steam.h"
 #include "local/TreasureManager.h"
+#include "local/TurretManager.h"
 #include "local/WaveManager.h"
 
 int main() {
@@ -111,20 +113,29 @@ int main() {
 
   bi::TreasureManager treasures;
 
+  bi::DecorationManager decorationsAbove(15);
+  bi::DecorationManager decorationsBelow(5);
+
   bi::Sea sea;
-  sea.generate(treasures);
+  sea.generate(treasures, decorationsAbove, decorationsBelow);
 
   bi::Compass compass;
   bi::Gold gold;
 
   bi::WaveManager waves;
 
+  bi::TurretManager turrets;
+  turrets.addTurret({ 4500.0f, 4000.0f });
+
   gf::EntityContainer mainEntities;
   mainEntities.addEntity(hero);
   mainEntities.addEntity(sea);
   mainEntities.addEntity(treasures);
+  mainEntities.addEntity(decorationsAbove);
+  mainEntities.addEntity(decorationsBelow);
   mainEntities.addEntity(steam);
   mainEntities.addEntity(waves);
+  mainEntities.addEntity(turrets);
 
   gf::EntityContainer hudEntities;
   // add entities to hudEntities
