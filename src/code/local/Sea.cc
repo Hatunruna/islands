@@ -300,7 +300,8 @@ namespace bi {
     auto loot = static_cast<GoldLooted*>(msg);
 
     gf::Vector2f next;
-    float col, row;
+    unsigned col, row;
+
     do {
       next.x = gRandom().computeUniformFloat(WorldMin, WorldMax);
       next.y = gRandom().computeUniformFloat(WorldMin, WorldMax);

@@ -29,7 +29,7 @@
 #include "local/WaveManager.h"
 
 int main() {
-  static constexpr gf::Vector2u ScreenSize(1024, 576);
+  static constexpr gf::Vector2u ScreenSize(600, 600);
   static constexpr gf::Vector2f ViewSize(576.0f, 576.0f);
   static constexpr gf::Vector2f ViewCenter(288.0f, 288.0f);
 
@@ -59,13 +59,7 @@ int main() {
   gf::ScreenView hudView;
   views.addView(hudView);
 
-  gf::Sprite logo;
-  logo.setTexture(bi::gResourceManager().getTexture("TeamLogo.png"));
-  window.setSize({600, 600});
-  gf::ScreenView splash;
-  renderer.setView(splash);
-  logo.setScale(1.5f);
-  logo.setAnchor(gf::Anchor::Center);
+  gf::Sprite logo(bi::gResourceManager().getTexture("TeamLogo.png"));
   renderer.clear();
   renderer.draw(logo);
   renderer.display();
@@ -165,6 +159,7 @@ int main() {
   renderer.clear(gf::Color::Black);
 
   gf::Clock clock;
+
 
   window.setFullscreen(true);
 
