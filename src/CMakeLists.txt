@@ -20,6 +20,8 @@ add_executable(islands
   code/islands.cc
   code/local/Compass.cc
   code/local/Confetti.cc
+  code/local/Decoration.cc
+  code/local/DecorationManager.cc
   code/local/Gold.cc
   code/local/Hero.cc
   code/local/Sea.cc
