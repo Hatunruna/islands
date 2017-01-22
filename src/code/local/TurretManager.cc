@@ -40,6 +40,8 @@ namespace bi {
           // Set hit message here
           bullet.active = false;
           gf::Log::print("hit\n");
+          bi::GameOver message;
+          gMessageManager().sendMessage(&message);
         }
         else if (bullet.timeElapsed >= 6.0f) {
           bullet.active = false;

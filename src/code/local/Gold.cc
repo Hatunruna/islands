@@ -14,9 +14,11 @@ namespace bi {
   Gold::Gold()
   : gf::Entity(10)
   , m_score(0)
+  , m_gameOver(false)
   , m_font(gResourceManager().getFont("rm_albion.ttf"))
   , m_coinsTexture(gResourceManager().getTexture("coin.png")) {
     // Event
+    gMessageManager().registerHandler<GameOver>(&Gold::onGameOver, this);
     gMessageManager().registerHandler<GoldLooted>(&Gold::onGoldLooted, this);
   }
 
@@ -25,32 +27,50 @@ namespace bi {
   }
 
   void Gold::render(gf::RenderTarget& target) {
-    // Compute the margin 5% of screen
-    gf::Vector2f margin;
-    margin.x = gWinGeometry().getXRatio(0.95f, 0.0f);
-    margin.y = gWinGeometry().getYRatio(0.05f, 0.0f);
+    if (m_gameOver) {
+      // Compute the margin 50% of screen
+      gf::Vector2f margin;
+      margin.x = gWinGeometry().getXRatio(0.5f, 0.0f);
+      margin.y = gWinGeometry().getYRatio(0.5f, 0.0f);
 
-    // Compute the font size 10% of height of screen
-    float fontSize = 10 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
+      // Compute the font size 10% of height of screen
+      float fontSize = 25 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
 
-    gf::Text text(std::to_string(m_score), m_font, fontSize);
-    text.setColor(gf::Color::White);
-    text.setOutlineColor(gf::Color::Black);
-    text.setAnchor(gf::Anchor::TopRight);
-    text.setPosition(margin);
+      gf::Text text("Game Over!\nYour score is : " + std::to_string(m_score), m_font, fontSize);
+      text.setColor(gf::Color::White);
+      text.setOutlineColor(gf::Color::Black);
+      text.setAnchor(gf::Anchor::Center);
+      text.setPosition(margin);
 
-    target.draw(text);
+      target.draw(text);
+    } else {
+      // Compute the margin 5% of screen
+      gf::Vector2f margin;
+      margin.x = gWinGeometry().getXRatio(0.95f, 0.0f);
+      margin.y = gWinGeometry().getYRatio(0.05f, 0.0f);
 
-    // Draw the coins
-    margin.x -= text.getLocalBounds().width + gWinGeometry().getXRatio(0.01f, 0.0f);
-    margin.y -= text.getLocalBounds().height;
-    gf::Sprite sprite;
-    sprite.setTexture(m_coinsTexture);
-    sprite.setPosition(margin);
-    sprite.setScale(fontSize / SPRITE_SIZE);
-    sprite.setAnchor(gf::Anchor::TopRight);
+      // Compute the font size 10% of height of screen
+      float fontSize = 10 * gWinGeometry().getYFromBottom(0.0f) / 100.0f;
 
-    target.draw(sprite);
+      gf::Text text(std::to_string(m_score), m_font, fontSize);
+      text.setColor(gf::Color::White);
+      text.setOutlineColor(gf::Color::Black);
+      text.setAnchor(gf::Anchor::TopRight);
+      text.setPosition(margin);
+
+      target.draw(text);
+
+      // Draw the coins
+      margin.x -= text.getLocalBounds().width + gWinGeometry().getXRatio(0.01f, 0.0f);
+      margin.y -= text.getLocalBounds().height;
+      gf::Sprite sprite;
+      sprite.setTexture(m_coinsTexture);
+      sprite.setPosition(margin);
+      sprite.setScale(fontSize / SPRITE_SIZE);
+      sprite.setAnchor(gf::Anchor::TopRight);
+
+      target.draw(sprite);
+    }
   }
 
   gf::MessageStatus Gold::onGoldLooted(gf::Id id, gf::Message *msg) {
@@ -61,4 +81,13 @@ namespace bi {
 
     return gf::MessageStatus::Keep;
   }
+
+  gf::MessageStatus Gold::onGameOver(gf::Id id, gf::Message *msg) {
+    assert(id == GameOver::type);
+
+    m_gameOver = true;
+
+    return gf::MessageStatus::Keep;
+  }
+
 }
