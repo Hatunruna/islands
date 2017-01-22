@@ -72,12 +72,13 @@ namespace bi {
       target.draw(text);
 
       // Draw the coins
-      margin.x -= text.getLocalBounds().width + gWinGeometry().getXRatio(0.01f, 0.0f);
-      margin.y -= text.getLocalBounds().height;
+      margin = text.getPosition();
+      margin.x -= text.getLocalBounds().width + gWinGeometry().getXRatio(0.005f, 0.0f);
+      gf::Log::print("%d, %d\n" , text.getPosition().x, text.getPosition().y);
       gf::Sprite sprite;
       sprite.setTexture(m_coinsTexture);
       sprite.setPosition(margin);
-      sprite.setScale(fontSize / SPRITE_SIZE);
+      sprite.setScale(fontSize * 0.33f / SPRITE_SIZE);
       sprite.setAnchor(gf::Anchor::TopRight);
 
       target.draw(sprite);
