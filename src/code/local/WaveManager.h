@@ -7,6 +7,8 @@
 #include <gf/Message.h>
 #include <gf/Vector.h>
 
+#include <SFML/Audio.hpp>
+
 namespace bi {
 
   class WaveManager : public gf::Entity {
@@ -35,6 +37,7 @@ namespace bi {
     float m_elapsed;
 
     gf::Vector2f m_hero;
+    sf::Sound m_waveSound;
   };
 
 }

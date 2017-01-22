@@ -26,15 +26,22 @@ namespace bi {
   static constexpr float BubbleRadiusIncrease = 10.0f;
   static constexpr float BubbleAdvance = 20.0f;
 
+  static constexpr float LimitSound = 1000.0f;
+
   WaveManager::WaveManager()
   : gf::Entity(15)
   , m_elapsed(0)
+  , m_waveSound(gResourceManager().getSound("wave.wav"))
   {
     gMessageManager().registerHandler<HeroPosition>(&WaveManager::onHeroPosition, this);
 
     // For tests
     m_p0 = { 4000.0f - WaveWidth / 2, 3500.0f };
     m_p1 = { 4000.0f + WaveWidth / 2, 3500.0f };
+
+    m_waveSound.setLoop(true);
+    m_waveSound.setVolume(0.0f);
+    m_waveSound.play();
   }
 
   void WaveManager::update(float dt) {
@@ -87,6 +94,13 @@ namespace bi {
 
       m_bubbles.push_back(bubble);
     }
+
+    // Set the wave volume
+    gf::Vector2f center = (m_p0 + m_p1) / 2.0f;
+    float distance = gf::squareDistance(center, m_hero);
+    float volume = LimitSound / distance * 5000.0f;
+    volume = gf::clamp(volume, 0.0f, 30.0f);
+    m_waveSound.setVolume(volume);
 
     // check if the hero is under the wave
 
