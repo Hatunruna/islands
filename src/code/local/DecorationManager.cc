@@ -44,7 +44,7 @@ namespace bi {
         break;
 
       case DecorationType::CAMPFIRE:
-        m_decorations.push_back(Decoration(position, 80.0f, angle, "campfire.png"));
+        m_decorations.push_back(Decoration(position, 100.0f, angle, "campfire.png"));
         break;
       }
 
