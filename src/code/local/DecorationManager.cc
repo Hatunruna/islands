@@ -12,7 +12,7 @@ namespace bi {
 
   void DecorationManager::addDecoration(const gf::Vector2f position) {
     // Choose a random treasure
-    static constexpr unsigned NUMBER_DECORATION = 6;
+    static constexpr unsigned NUMBER_DECORATION = 8;
     DecorationType decorationType = static_cast<DecorationType>(gRandom().computeUniformInteger<unsigned>(0, NUMBER_DECORATION-1));
     float angle = gRandom().computeUniformFloat<float>(0, gf::Pi * 2);
 
@@ -32,6 +32,10 @@ namespace bi {
       case DecorationType::PALMTREE3:
         m_decorations.push_back(Decoration(position, 160.0f, angle, "palm_tree03.png"));
         break;
+      case DecorationType::HOUSE:
+      case DecorationType::PIPE:
+        m_decorations.push_back(Decoration(position, 160.0f, angle, "house.png"));
+        break;
       }
     } else {
       // BELOW HERO
@@ -49,6 +53,10 @@ namespace bi {
       case DecorationType::CAMPFIRE:
       case DecorationType::PALMTREE3:
         m_decorations.push_back(Decoration(position, 100.0f, angle, "campfire.png"));
+        break;
+      case DecorationType::HOUSE:
+      case DecorationType::PIPE:
+        m_decorations.push_back(Decoration(position, 40.0f, angle, "pipe.png"));
         break;
       }
 

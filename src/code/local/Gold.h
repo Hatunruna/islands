@@ -16,6 +16,7 @@ namespace bi {
     virtual void render(gf::RenderTarget& target) override;
 
     bool isGameOver() { return m_gameOver; }
+    bool isWin() { return m_win; }
 
   private:
     gf::MessageStatus onGameOver(gf::Id type, gf::Message *msg);
@@ -24,6 +25,7 @@ namespace bi {
   private:
     unsigned m_score;
     bool m_gameOver;
+    bool m_win;
     gf::Font &m_font;
     gf::Texture &m_coinsTexture;
   };
