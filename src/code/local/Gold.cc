@@ -74,7 +74,6 @@ namespace bi {
       // Draw the coins
       margin = text.getPosition();
       margin.x -= text.getLocalBounds().width + gWinGeometry().getXRatio(0.005f, 0.0f);
-      gf::Log::print("%d, %d\n" , text.getPosition().x, text.getPosition().y);
       gf::Sprite sprite;
       sprite.setTexture(m_coinsTexture);
       sprite.setPosition(margin);
